@@ -1,0 +1,40 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Full Regression Suite" verbose="1">
+    <test name="Positive login test">
+        <classes>
+            <class name="com.practiceautomationtest.tests.LoginTestPage.LoginTest">
+                <methods>
+                    <include name="positiveTestLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Incorrect User Name">
+        <classes>
+            <class name="com.practiceautomationtest.tests.LoginTestPage.LoginTest">
+                <methods>
+                    <include name="incorrectUserNameTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Incorrect Password Test">
+        <classes>
+            <class name="com.practiceautomationtest.tests.LoginTestPage.LoginTest">
+                <methods>
+                    <include name="incorrectPasswordTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Add Department Test">
+        <classes>
+            <class name="com.practiceautomationtest.tests.DepartmentTestPage.DepartmentTest">
+                <methods>
+                    <include name="addDepartment"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
