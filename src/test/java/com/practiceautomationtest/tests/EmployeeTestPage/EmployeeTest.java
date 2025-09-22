@@ -24,5 +24,6 @@ public class EmployeeTest extends BaseTest {
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         employeePage.executeEditEmployee();
+        System.out.println("Hello");
     }
 }
