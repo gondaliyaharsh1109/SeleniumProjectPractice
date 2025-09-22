@@ -198,7 +198,7 @@ public class EmployeePage extends BasePage {
         elementToBeClick(mobilePhoneInputField);
         waitForElement(mobilePhoneInputField).sendKeys(mobileNumber);
         departmentSelection("EC Department");
-        positionSelection("Head Manager");
+        positionSelection("Wire Man");
         waitForElement(saveBtn).click();
         employeeCreatedMessage();
         verifyEmployeeAddedBySearch(expectedFullName);
