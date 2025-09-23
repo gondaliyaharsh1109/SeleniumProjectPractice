@@ -2,6 +2,7 @@ package com.practiceautomationtest.tests.allPagesClass;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -9,6 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.Random;
 
 public class DepartmentPage extends BasePage {
+    Faker faker = new Faker();
     By newButton = By.xpath("//button[@tabindex='0']");
     By enterDepartmentName = By.id("departmentName");
     By enterLocationName = By.id("location");
@@ -33,16 +35,9 @@ public class DepartmentPage extends BasePage {
     public void clickSaveButton(){
         waitForElement(clickSaveButton).click();
     }
-    public String getRandomString(int length){
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            sb.append(characters.charAt(random.nextInt(characters.length())));
-        }
-        return sb.toString();
-    }
-    public void executeAddDepartment(String departmentName, String locationName){
+    public void executeAddDepartment(){
+        String departmentName = faker.company().industry();
+        String locationName = faker.address().city();
         newButtonClick();
         visitCreateDepartmentPage();
         confirmVisibleCreateDepartmentText();

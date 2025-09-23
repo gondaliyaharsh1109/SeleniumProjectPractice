@@ -15,9 +15,7 @@ public class DepartmentTest extends BaseTest {
         loginPage.executeLogin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
-        String randomDepartment = "Dept-" + departmentPage.getRandomString(6);
-        String randomLocation = "Loc-" + departmentPage.getRandomString(6);
-        departmentPage.executeAddDepartment(randomDepartment,randomLocation);
+        departmentPage.executeAddDepartment();
         String expectedMessage = "Department created successfully.";
         Assert.assertEquals(loginPage.toastMessage(),expectedMessage);
     }
