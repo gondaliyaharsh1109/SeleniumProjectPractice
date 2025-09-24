@@ -72,26 +72,40 @@ public class DepartmentPage extends BasePage {
         waitForElement(editDepartmentNameField).sendKeys(newName);
         clickSaveButton();
     }
-    public void verifyDeleteDepartmentValidationWithPosition(){
+    public String getDepartmentNameFromPositionTab(){
         waitForElement(clickPositionTab).click();
-        String actualVerifyDepartmentName = waitForElement(verifyDepartmentNameFromPositionPage).getText();
+        return waitForElement(verifyDepartmentNameFromPositionPage).getText();
+    }
+    public void searchDepartment(String departmentName) {
         waitForElement(clickDepartmentsTab).click();
         waitForElementToBeInvisible(loaderToBeInvisible);
         waitForElement(searchDepartment).click();
-        waitForElement(searchDepartment).sendKeys(actualVerifyDepartmentName);
+        waitForElement(searchDepartment).sendKeys(departmentName);
         waitForElement(searchDepartment).sendKeys(Keys.ENTER);
         waitForElementToBeInvisible(loaderToBeInvisible);
+    }
+    public void openDepartmentForEditing() {
         actions.doubleClick(waitForElement(firstDepartmentNameInList)).perform();
         String actualEditDepartmentText = waitForElement(verifyEditDepartmentText).getText();
         String expectedEditDepartmentText = "Edit Department";
         Assert.assertEquals(actualEditDepartmentText,expectedEditDepartmentText);
+    }
+    public void deleteDepartmentAndVerifyConfirm() {
         waitForElement(deleteDepartmentBtn).click();
         String actualDeleteConfirmMessage = waitForElement(verifyConfirmDeleteMessage).getText();
-        String expectedDeleteConfirmMessage = "Confirm";
-        Assert.assertEquals(actualDeleteConfirmMessage,expectedDeleteConfirmMessage);
+        Assert.assertEquals(actualDeleteConfirmMessage, "Confirm");
         waitForElement(confirmDeleteBtn).click();
+    }
+    public void verifyDepartmentAttachedValidation() {
         String actualDepartmentValidateMessage = waitForElement(departmentAttachedWithPosition).getText();
         String expectedDepartmentValidateMessage = "This department has positions attached. Please remove positions first.";
         Assert.assertEquals(actualDepartmentValidateMessage,expectedDepartmentValidateMessage);
+    }
+    public void verifyDeleteDepartmentValidationWithPosition(){
+        String departmentName = getDepartmentNameFromPositionTab();
+        searchDepartment(departmentName);
+        openDepartmentForEditing();
+        deleteDepartmentAndVerifyConfirm();
+        verifyDepartmentAttachedValidation();
     }
 }
