@@ -23,7 +23,7 @@ public class LoginTest extends BaseTest{
         loginPage.visit();
         loginPage.executeLogin("admin@yahoo.com","Admin123!",false);
         String expectedErrorMessage = "No account with this email has been registered.";
-        Assert.assertEquals(loginPage.toastMessage(),expectedErrorMessage);
+        Assert.assertEquals(loginPage.verifyToastMessage(),expectedErrorMessage);
     }
 
     @Test
@@ -32,6 +32,6 @@ public class LoginTest extends BaseTest{
         loginPage.visit();
         loginPage.executeLogin("admin@gmail.com","Admin123@");
         String expectedMessage = "Invalid credentials.";
-        Assert.assertEquals(loginPage.toastMessage(),expectedMessage);
+        Assert.assertEquals(loginPage.verifyToastMessage(),expectedMessage);
     }
 }

@@ -15,7 +15,6 @@ public class DepartmentTest extends BaseTest {
     public void addDepartment(){
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
-        loginPage.visit();
         loginPage.executeLogin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(),expectedUrl);

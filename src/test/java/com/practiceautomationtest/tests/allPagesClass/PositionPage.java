@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,11 @@ public class PositionPage extends BasePage{
     By deletePositionToastMessage = By.xpath("//p[contains(text(),'Removed the position details successfully')]");
     By noPositionAvailable = By.xpath("//p[contains(text(),'0–0 of 0')]");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
+    By clickEmployeeTab = By.xpath("//span[contains(text(),'Employees')]");
+    By verifyEditPositionText = By.xpath("//p[contains(text(),'Edit Position')]");
+    By deletePositionBtn = By.xpath("(//button[contains(text(),'Delete')])[1]");
+    By verifyConfirmDeleteMessage = By.xpath("//h2[contains(text(),'Confirm')]");
+    By positionAttachedWithEmployee = By.xpath("//p[contains(text(),'This position has employees attached. Please remove employees first.')]");
 
     public PositionPage(WebDriver driver){
         super(driver);
@@ -124,27 +130,63 @@ public class PositionPage extends BasePage{
         waitForElement(searchPosition).sendKeys(Keys.ENTER);
         waitForElement(noPositionAvailable);
     }
-    public void HashMapPractice(){
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://practice.expandtesting.com/tables");
-        WebElement table = driver.findElement(By.id("table1"));
-        List<WebElement> rows = table.findElements(By.xpath("//div//table[(@id='table1')]//tbody//tr"));
-
-        for (int i = 0; i < rows.size(); i++) {
-            WebElement row = rows.get(i);
-
-            List<WebElement> cols = row.findElements(By.tagName("td"));
-
-            HashMap<String, String> rowData = new HashMap<>();
-            rowData.put("Last Name", cols.get(0).getText());
-            rowData.put("First Name", cols.get(1).getText());
-            rowData.put("Email", cols.get(2).getText());
-            rowData.put("Due", cols.get(3).getText());
-            rowData.put("Web Site", cols.get(4).getText());
-            rowData.put("Action", cols.get(5).getText());
-
-            System.out.println("Row " + (i + 1) + ": " + rowData);
-        }
-        driver.quit();
+    public String getPositionNameFromEmployeeTab(){
+        waitForElement(clickEmployeeTab).click();
+        return waitForElement(verifyFirstPosition).getText();
     }
+    public void searchPosition(String positionName) {
+        waitForElement(clickPositionTab).click();
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        waitForElement(searchPosition).click();
+        waitForElement(searchPosition).sendKeys(positionName);
+        waitForElement(searchPosition).sendKeys(Keys.ENTER);
+        waitForElementToBeInvisible(loaderToBeInvisible);
+    }
+    public void goToPositionDetails(String positionName) {
+        searchPosition(positionName);
+        actions.doubleClick(waitForElement(verifyFirstPosition)).perform();
+        String actualEditPositionText = waitForElement(verifyEditPositionText).getText();
+        String expectedEditPositionText = "Edit Position";
+        Assert.assertEquals(actualEditPositionText,expectedEditPositionText);
+    }
+    public void deletePositionAndVerifyConfirm() {
+        waitForElement(deletePositionBtn).click();
+        String actualDeleteConfirmMessage = waitForElement(verifyConfirmDeleteMessage).getText();
+        Assert.assertEquals(actualDeleteConfirmMessage, "Confirm");
+        waitForElement(confirmDeleteBtn).click();
+    }
+    public void verifyPositionAttachedValidation() {
+        String actualPositionValidateMessage = waitForElement(positionAttachedWithEmployee).getText();
+        String expectedPositionValidateMessage = "This position has employees attached. Please remove employees first.";
+        Assert.assertEquals(actualPositionValidateMessage,expectedPositionValidateMessage);
+    }
+    public void verifyDeletePositionValidationWithEmployee(){
+        String positionName = getPositionNameFromEmployeeTab();
+        goToPositionDetails(positionName);
+        deletePositionAndVerifyConfirm();
+        verifyPositionAttachedValidation();
+    }
+//    public void HashMapPractice(){
+//        WebDriver driver = new ChromeDriver();
+//        driver.get("https://practice.expandtesting.com/tables");
+//        WebElement table = driver.findElement(By.id("table1"));
+//        List<WebElement> rows = table.findElements(By.xpath("//div//table[(@id='table1')]//tbody//tr"));
+//
+//        for (int i = 0; i < rows.size(); i++) {
+//            WebElement row = rows.get(i);
+//
+//            List<WebElement> cols = row.findElements(By.tagName("td"));
+//
+//            HashMap<String, String> rowData = new HashMap<>();
+//            rowData.put("Last Name", cols.get(0).getText());
+//            rowData.put("First Name", cols.get(1).getText());
+//            rowData.put("Email", cols.get(2).getText());
+//            rowData.put("Due", cols.get(3).getText());
+//            rowData.put("Web Site", cols.get(4).getText());
+//            rowData.put("Action", cols.get(5).getText());
+//
+//            System.out.println("Row " + (i + 1) + ": " + rowData);
+//        }
+//        driver.quit();
+//    }
 }
