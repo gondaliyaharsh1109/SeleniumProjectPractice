@@ -124,27 +124,27 @@ public class PositionPage extends BasePage{
         waitForElement(searchPosition).sendKeys(Keys.ENTER);
         waitForElement(noPositionAvailable);
     }
-    public void HashMapPractice(){
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://practice.expandtesting.com/tables");
-        WebElement table = driver.findElement(By.id("table1"));
-        List<WebElement> rows = table.findElements(By.xpath("//div//table[(@id='table1')]//tbody//tr"));
-
-        for (int i = 0; i < rows.size(); i++) {
-            WebElement row = rows.get(i);
-
-            List<WebElement> cols = row.findElements(By.tagName("td"));
-
-            HashMap<String, String> rowData = new HashMap<>();
-            rowData.put("Last Name", cols.get(0).getText());
-            rowData.put("First Name", cols.get(1).getText());
-            rowData.put("Email", cols.get(2).getText());
-            rowData.put("Due", cols.get(3).getText());
-            rowData.put("Web Site", cols.get(4).getText());
-            rowData.put("Action", cols.get(5).getText());
-
-            System.out.println("Row " + (i + 1) + ": " + rowData);
-        }
-        driver.quit();
-    }
+//    public void HashMapPractice(){
+//        WebDriver driver = new ChromeDriver();
+//        driver.get("https://practice.expandtesting.com/tables");
+//        WebElement table = driver.findElement(By.id("table1"));
+//        List<WebElement> rows = table.findElements(By.xpath("//div//table[(@id='table1')]//tbody//tr"));
+//
+//        for (int i = 0; i < rows.size(); i++) {
+//            WebElement row = rows.get(i);
+//
+//            List<WebElement> cols = row.findElements(By.tagName("td"));
+//
+//            HashMap<String, String> rowData = new HashMap<>();
+//            rowData.put("Last Name", cols.get(0).getText());
+//            rowData.put("First Name", cols.get(1).getText());
+//            rowData.put("Email", cols.get(2).getText());
+//            rowData.put("Due", cols.get(3).getText());
+//            rowData.put("Web Site", cols.get(4).getText());
+//            rowData.put("Action", cols.get(5).getText());
+//
+//            System.out.println("Row " + (i + 1) + ": " + rowData);
+//        }
+//        driver.quit();
+//    }
 }
