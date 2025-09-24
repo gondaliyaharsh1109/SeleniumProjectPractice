@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import java.util.Random;
-
 public class DepartmentPage extends BasePage {
     Faker faker = new Faker();
     By newButton = By.xpath("//button[@tabindex='0']");
