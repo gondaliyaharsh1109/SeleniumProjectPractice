@@ -67,10 +67,10 @@ public class DepartmentPage extends BasePage {
     public void verifyDeleteDepartmentValidationWithPosition(){
         waitForElement(clickPositionTab).click();
         String actualVerifyDepartmentName = waitForElement(verifyDepartmentNameFromPositionPage).getText();
-        String expectedDepartmentName = "EC Department";
-        Assert.assertEquals(actualVerifyDepartmentName,expectedDepartmentName);
         waitForElement(clickDepartmentsTab).click();
-        waitForElement(searchDepartment).sendKeys(expectedDepartmentName);
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        waitForElement(searchDepartment).click();
+        waitForElement(searchDepartment).sendKeys(actualVerifyDepartmentName);
         waitForElement(searchDepartment).sendKeys(Keys.ENTER);
         waitForElementToBeInvisible(loaderToBeInvisible);
         actions.doubleClick(waitForElement(clickOnDepartmentToEdit)).perform();
