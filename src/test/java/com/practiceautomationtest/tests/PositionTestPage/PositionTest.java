@@ -3,6 +3,8 @@ import com.github.javafaker.Faker;
 import com.practiceautomationtest.tests.allPagesClass.LoginPage;
 import com.practiceautomationtest.tests.allPagesClass.PositionPage;
 import com.practiceautomationtest.tests.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,7 +14,6 @@ public class PositionTest extends BaseTest {
     public void addPosition(){
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.visit();
         loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
@@ -29,7 +30,6 @@ public class PositionTest extends BaseTest {
     public void searchAndCountPositions() {
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.visit();
         loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
@@ -39,7 +39,6 @@ public class PositionTest extends BaseTest {
     public void editAndDeletePosition(){
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.visit();
         loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
@@ -67,8 +66,17 @@ public class PositionTest extends BaseTest {
         positionPage.verifyDeletedPositionBySearch(uniqueEditPosition);
     }
     @Test
-    public void HashMapPractice(){
+    public void deletePositionValidationWithEmployee(){
+        LoginPage loginPage = new LoginPage(driver);
         PositionPage positionPage = new PositionPage(driver);
-        positionPage.HashMapPractice();
+        loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
+        positionPage.verifyDeletePositionValidationWithEmployee();
     }
+//    @Test
+//    public void HashMapPractice(){
+//        PositionPage positionPage = new PositionPage(driver);
+//        positionPage.HashMapPractice();
+//    }
 }
