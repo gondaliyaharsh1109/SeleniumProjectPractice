@@ -28,7 +28,7 @@ public class EmployeePage extends BasePage {
     By stateSelectionBtn = By.xpath("//input[@id='state']/following-sibling::div/button");
     By stateSelectionName = By.xpath("(//div[@data-field='stateName'])[2]");
     By postalCodeInputField = By.id("postalcode");
-    By clickingOKBtn = By.xpath("//button[contains(text(),'OK')]");
+    By clickingOkBtn = By.xpath("//button[contains(text(),'OK')]");
     By addressCreatedToastMessage = By.xpath("//div//p[contains(text(),'Address created successfully.')]");
     By genderTypeDropDown = By.xpath("//div[@id='id__gender']");
     By waitForGenderTypeDropDown = By.xpath("//li[@role='option']");
@@ -57,13 +57,11 @@ public class EmployeePage extends BasePage {
         String expectedAddressCreatedMessage = "Address created successfully.";
         Assert.assertEquals(actualAddressCreatedToastMessage,expectedAddressCreatedMessage);
     }
-    public void addAddress(String citySelection, String stateSelection){
-        String line1 = faker.address().streetAddress();
-        String line2 = faker.address().streetAddress();
-        String postalCode = faker.number().digits(6);
-
+    public void enterAddressLines(String line1, String line2) {
         waitForElement(addressLine1).sendKeys(line1);
         waitForElement(addressLine2).sendKeys(line2);
+    }
+    public void selectCity(String citySelection) {
         elementToBeClick(citySelectionBtn);
         waitForElement(citySelectionBtn).click();
         loaderToBeInvisible();
@@ -71,43 +69,52 @@ public class EmployeePage extends BasePage {
         waitForElement(searchInputField).sendKeys(Keys.ENTER);
         loaderToBeInvisible();
         actions.doubleClick(waitForElement(selectCityName)).perform();
+    }
+    public void selectState(String stateSelection) {
         elementToBeClick(stateSelectionBtn);
         waitForElement(stateSelectionBtn).click();
         loaderToBeInvisible();
         waitForElement(searchInputField).sendKeys(stateSelection);
         loaderToBeInvisible();
         actions.doubleClick(waitForElement(stateSelectionName)).perform();
+    }
+    public void enterPostalCode(String postalCode) {
         waitForElement(postalCodeInputField).sendKeys(String.valueOf(postalCode));
-        waitForElement(clickingOKBtn).click();
+    }
+    public void saveAddress() {
+        waitForElement(clickingOkBtn).click();
         addressCreatedToastMessage();
+    }
+    public void addAddress(String citySelection, String stateSelection) {
+        String line1 = faker.address().streetAddress();
+        String line2 = faker.address().streetAddress();
+        String postalCode = faker.number().digits(6);
+
+        enterAddressLines(line1, line2);
+        selectCity(citySelection);
+        selectState(stateSelection);
+        enterPostalCode(postalCode);
+        saveAddress();
+    }
+    public void clearAndEnterAddressLines(String line1, String line2) {
+        waitForElement(addressLine1).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(addressLine1).sendKeys(Keys.DELETE);
+        waitForElement(addressLine1).sendKeys(line1);
+
+        waitForElement(addressLine2).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(addressLine2).sendKeys(Keys.DELETE);
+        waitForElement(addressLine2).sendKeys(line2);
     }
     public void editAddress(String citySelection, String stateSelection){
         String line1 = faker.address().streetAddress();
         String line2 = faker.address().streetAddress();
         String postalCode = faker.number().digits(6);
 
-        waitForElement(addressLine1).sendKeys(Keys.chord(Keys.CONTROL,"a"));
-        waitForElement(addressLine1).sendKeys(Keys.DELETE);
-        waitForElement(addressLine1).sendKeys(line1);
-        waitForElement(addressLine2).sendKeys(Keys.chord(Keys.CONTROL,"a"));
-        waitForElement(addressLine2).sendKeys(Keys.DELETE);
-        waitForElement(addressLine2).sendKeys(line2);
-        elementToBeClick(citySelectionBtn);
-        waitForElement(citySelectionBtn).click();
-        loaderToBeInvisible();
-        waitForElement(searchInputField).sendKeys(citySelection);
-        waitForElement(searchInputField).sendKeys(Keys.ENTER);
-        loaderToBeInvisible();
-        actions.doubleClick(waitForElement(selectCityName)).perform();
-        elementToBeClick(stateSelectionBtn);
-        waitForElement(stateSelectionBtn).click();
-        loaderToBeInvisible();
-        waitForElement(searchInputField).sendKeys(stateSelection);
-        loaderToBeInvisible();
-        actions.doubleClick(waitForElement(stateSelectionName)).perform();
-        waitForElement(postalCodeInputField).sendKeys(String.valueOf(postalCode));
-        waitForElement(clickingOKBtn).click();
-        addressCreatedToastMessage();
+        clearAndEnterAddressLines(line1, line2);
+        selectCity(citySelection);
+        selectState(stateSelection);
+        enterPostalCode(postalCode);
+        saveAddress();
     }
     public void departmentSelection(String departmentSelection){
         waitForElement(departmentSelectionBtn).click();
@@ -172,6 +179,48 @@ public class EmployeePage extends BasePage {
         String actualEmployeeUpdatedName = waitForElement(verifyFirstEmployeeNameBySearch).getText();
         Assert.assertEquals(actualEmployeeUpdatedName,verifyEmployeeUpdatedName);
     }
+    public void navigateToAddEmployeePage() {
+        waitForElement(clickEmployeeTab).click();
+        waitForElement(newBtn).click();
+        waitForElement(visibleCreateEmployeeText).getText();
+    }
+    public void enterEmployeeBasicDetails(String email, String firstName, String middleName, String lastName) {
+        elementToBeClick(emailInputField);
+        waitForElement(emailInputField).sendKeys(email);
+
+        userDropDrownSelection("Employee");
+
+        elementToBeClick(firstNameInputField);
+        waitForElement(firstNameInputField).sendKeys(firstName);
+
+        elementToBeClick(middleNameInputField);
+        waitForElement(middleNameInputField).sendKeys(middleName);
+
+        elementToBeClick(lastNameInputField);
+        waitForElement(lastNameInputField).sendKeys(lastName);
+    }
+    public void addEmployeeAddress(String city, String state) {
+        waitForElement(addressBtn).click();
+        addAddress(city, state);
+    }
+    public void selectGender(String gender) {
+        genderDropDrownSelection(gender);
+    }
+    public void enterMobileNumber(String mobileNumber) {
+        elementToBeClick(mobilePhoneInputField);
+        waitForElement(mobilePhoneInputField).sendKeys(mobileNumber);
+    }
+    public void selectDepartmentAndPosition(String department, String position) {
+        departmentSelection(department);
+        positionSelection(position);
+    }
+    public void saveEmployee() {
+        waitForElement(saveBtn).click();
+        employeeCreatedMessage();
+    }
+    public void verifyEmployee(String expectedFullName) {
+        verifyEmployeeAddedBySearch(expectedFullName);
+    }
     public void executeAddEmployee(){
         String firstName = faker.name().firstName();
         String middleName = faker.name().firstName();
@@ -180,33 +229,64 @@ public class EmployeePage extends BasePage {
         String mobileNumber = faker.number().digits(10);
         String expectedFullName = firstName + " " + middleName + " " + lastName;
 
-        waitForElement(clickEmployeeTab).click();
-        waitForElement(newBtn).click();
-        waitForElement(visibleCreateEmployeeText).getText();
-        elementToBeClick(emailInputField);
-        waitForElement(emailInputField).sendKeys(emailAddress);
-        userDropDrownSelection("Employee");
-        elementToBeClick(firstNameInputField);
-        waitForElement(firstNameInputField).sendKeys(firstName);
-        elementToBeClick(middleNameInputField);
-        waitForElement(middleNameInputField).sendKeys(middleName);
-        elementToBeClick(lastNameInputField);
-        waitForElement(lastNameInputField).sendKeys(lastName);
-        waitForElement(addressBtn).click();
-        addAddress("Ahmedabad","Gujarat");
-        genderDropDrownSelection("Male");
-        elementToBeClick(mobilePhoneInputField);
-        waitForElement(mobilePhoneInputField).sendKeys(mobileNumber);
-        departmentSelection("EC Department");
-        positionSelection("Wire Man");
-        waitForElement(saveBtn).click();
-        employeeCreatedMessage();
-        verifyEmployeeAddedBySearch(expectedFullName);
+        navigateToAddEmployeePage();
+        enterEmployeeBasicDetails(emailAddress, firstName, middleName, lastName);
+        addEmployeeAddress("Ahmedabad", "Gujarat");
+        selectGender("Male");
+        enterMobileNumber(mobileNumber);
+        selectDepartmentAndPosition("EC Department", "Wire Man");
+        saveEmployee();
+        verifyEmployee(expectedFullName);
     }
     public void employeeUpdatedToastMessage(){
         String actualEmployeeUpdatedToastMessage = waitForElement(employeeUpdatedToastMessage).getText();
         String expectedEmployeeUpdatedToastMessage = "Employee details updated successfully.";
         Assert.assertEquals(actualEmployeeUpdatedToastMessage,expectedEmployeeUpdatedToastMessage);
+    }
+    public void openFirstEmployeeForEditing() {
+        actions.doubleClick(waitForElement(verifyFirstEmployeeNameBySearch)).perform();
+    }
+    public void updateUserRole(String role) {
+        userDropDrownSelection(role);
+    }
+    public void updateEmployeeName(String firstName, String middleName, String lastName) {
+        // First Name
+        elementToBeClick(firstNameInputField);
+        waitForElement(firstNameInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(firstNameInputField).sendKeys(Keys.DELETE);
+        waitForElement(firstNameInputField).sendKeys(firstName);
+
+        // Middle Name
+        elementToBeClick(middleNameInputField);
+        waitForElement(middleNameInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(middleNameInputField).sendKeys(Keys.DELETE);
+        waitForElement(middleNameInputField).sendKeys(middleName);
+
+        // Last Name
+        elementToBeClick(lastNameInputField);
+        waitForElement(lastNameInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(lastNameInputField).sendKeys(Keys.DELETE);
+        waitForElement(lastNameInputField).sendKeys(lastName);
+    }
+    public void updateEmployeeAddress(String city, String state) {
+        waitForElement(addressBtn).click();
+        editAddress(city, state);
+    }
+    public void updateGender(String gender) {
+        genderDropDrownSelection(gender);
+    }
+    public void updateMobileNumber(String mobileNumber) {
+        elementToBeClick(mobilePhoneInputField);
+        waitForElement(mobilePhoneInputField).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(mobilePhoneInputField).sendKeys(Keys.DELETE);
+        waitForElement(mobilePhoneInputField).sendKeys(mobileNumber);
+    }
+    public void saveUpdatedEmployee() {
+        waitForElement(saveBtn).click();
+        employeeUpdatedToastMessage();
+    }
+    public void verifyUpdatedEmployee(String expectedFullName) {
+        verifyEmployeeUpdatedBySearch(expectedFullName);
     }
     public void executeEditEmployee(){
         String firstNameInEdit = faker.name().firstName();
@@ -215,31 +295,18 @@ public class EmployeePage extends BasePage {
         String mobileNumberInEdit = faker.number().digits(10);
         String expectedFullNameInEdit = firstNameInEdit + " " + middleNameInEdit + " " + lastNameInEdit;
         executeAddEmployee();
-        actions.doubleClick(waitForElement(verifyFirstEmployeeNameBySearch)).perform();
-        userDropDrownSelection("Admin");
-        elementToBeClick(firstNameInputField);
-        waitForElement(firstNameInputField).sendKeys(Keys.chord(Keys.CONTROL,"a"));
-        waitForElement(firstNameInputField).sendKeys(Keys.DELETE);
-        waitForElement(firstNameInputField).sendKeys(firstNameInEdit);
-        elementToBeClick(middleNameInputField);
-        waitForElement(middleNameInputField).sendKeys(Keys.chord(Keys.CONTROL,"a"));
-        waitForElement(middleNameInputField).sendKeys(Keys.DELETE);
-        waitForElement(middleNameInputField).clear();
-        waitForElement(middleNameInputField).sendKeys(middleNameInEdit);
-        elementToBeClick(lastNameInputField);
-        waitForElement(lastNameInputField).sendKeys(Keys.chord(Keys.CONTROL,"a"));
-        waitForElement(lastNameInputField).sendKeys(Keys.DELETE);
-        waitForElement(lastNameInputField).clear();
-        waitForElement(lastNameInputField).sendKeys(lastNameInEdit);
-        waitForElement(addressBtn).click();
-        editAddress("Coimbatore","Tamil Nadu");
-        genderDropDrownSelection("Female");
-        elementToBeClick(mobilePhoneInputField);
-        waitForElement(mobilePhoneInputField).sendKeys(Keys.chord(Keys.CONTROL,"a"));
-        waitForElement(mobilePhoneInputField).sendKeys(Keys.DELETE);
-        waitForElement(mobilePhoneInputField).sendKeys(mobileNumberInEdit);
-        waitForElement(saveBtn).click();
-        employeeUpdatedToastMessage();
-        verifyEmployeeUpdatedBySearch(expectedFullNameInEdit);
+
+        // First add an employee
+        executeAddEmployee();
+
+        // Edit that employee
+        openFirstEmployeeForEditing();
+        updateUserRole("Admin");
+        updateEmployeeName(firstNameInEdit, middleNameInEdit, lastNameInEdit);
+        updateEmployeeAddress("Coimbatore", "Tamil Nadu");
+        updateGender("Female");
+        updateMobileNumber(mobileNumberInEdit);
+        saveUpdatedEmployee();
+        verifyUpdatedEmployee(expectedFullNameInEdit);
     }
 }
