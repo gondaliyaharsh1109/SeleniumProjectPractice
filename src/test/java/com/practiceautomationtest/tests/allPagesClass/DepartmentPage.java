@@ -25,7 +25,7 @@ public class DepartmentPage extends BasePage {
     By clickDepartmentsTab = By.xpath("//span[contains(text(),'Departments')]");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
     By deleteDepartmentBtn = By.xpath("(//button[contains(text(),'Delete')])[1]");
-    By verifyConfirmDeleteMessage = By.xpath("//p[contains(text(),'Do you want to delete the Department: EC Department?')]");
+    By verifyConfirmDeleteMessage = By.xpath("//h2[contains(text(),'Confirm')]");
     By confirmDeleteBtn = By.xpath("(//button[contains(text(),'Delete')])[3]");
     By departmentAttachedWithPosition = By.xpath("//p[contains(text(),'This department has positions attached. Please remove positions first.')]");
 
@@ -79,7 +79,7 @@ public class DepartmentPage extends BasePage {
         Assert.assertEquals(actualEditDepartmentText,expectedEditDepartmentText);
         waitForElement(deleteDepartmentBtn).click();
         String actualDeleteConfirmMessage = waitForElement(verifyConfirmDeleteMessage).getText();
-        String expectedDeleteConfirmMessage = "Do you want to delete the Department: EC Department?";
+        String expectedDeleteConfirmMessage = "Confirm";
         Assert.assertEquals(actualDeleteConfirmMessage,expectedDeleteConfirmMessage);
         waitForElement(confirmDeleteBtn).click();
         String actualDepartmentValidateMessage = waitForElement(departmentAttachedWithPosition).getText();
