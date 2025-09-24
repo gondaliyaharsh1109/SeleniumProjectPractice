@@ -18,10 +18,6 @@ public class DepartmentPage extends BasePage {
     By clickOnDepartmentToEdit = By.xpath("(//div[@data-field='Department Name'])[2]");
     By searchDepartment = By.xpath("//input[@placeholder='Search with DepartmentName']");
     By editDepartmentNameField = By.xpath("//input[@id='departmentName']");
-    By clickPositionTab = By.xpath("//span[contains(text(),'Position')]");
-    By verifyDepartmentNameFromPositionPage = By.xpath("(//div[@data-field='departmentName'])[2]");
-    By clickDepartmentsTab = By.xpath("//span[contains(text(),'Departments')]");
-    By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
 
     public DepartmentPage(WebDriver driver){
         super(driver);
