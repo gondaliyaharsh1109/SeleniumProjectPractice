@@ -28,30 +28,49 @@ public class TaskPage extends BasePage{
     public TaskPage(WebDriver driver){
         super(driver);
     }
-    public void addNewTask(){
-        String taskName = "Task: " + faker.company().buzzword();
-        String taskDescription = faker.lorem().sentence(10);
-
+    public void navigateToTaskPage() {
         waitForElement(clickTasksTab).click();
         waitForElement(newButton).click();
         String actualVisibleCreateTaskText = waitForElement(visibleCreateTaskText).getText();
-        String expectedVisibleCreateTaskText = "Create Task";
-        Assert.assertEquals(actualVisibleCreateTaskText,expectedVisibleCreateTaskText);
+        Assert.assertEquals(actualVisibleCreateTaskText, "Create Task");
+    }
+    public void enterTaskName(String taskName) {
         waitForElement(taskNameInputField).sendKeys(taskName);
+    }
+    public void selectAssignee() {
         waitForElement(assigneeSelectBtn).click();
         waitForElementToBeInvisible(loaderToBeInvisible);
         actions.doubleClick(waitForElement(assigneeEmailField)).perform();
+    }
+    public void selectTaskDate() {
         waitForElement(taskDateSelectionBtn).click();
         waitForElement(selectDate).click();
+    }
+    public void enterTaskDescription(String taskDescription) {
         waitForElement(taskDescInputField).sendKeys(taskDescription);
+    }
+    public void saveTask() {
         waitForElement(saveBtn).click();
         String actualTaskCreatedMessage = basePage.verifyToastMessage();
-        String expectedTaskCreatedMessage = "Task created successfully.";
-        Assert.assertEquals(actualTaskCreatedMessage,expectedTaskCreatedMessage);
+        Assert.assertEquals(actualTaskCreatedMessage, "Task created successfully.");
+    }
+    public void verifyTaskCreated(String taskName) {
         waitForElement(searchTaskName).sendKeys(taskName);
         waitForElement(searchTaskName).sendKeys(Keys.ENTER);
         waitForElementToBeInvisible(loaderToBeInvisible);
         String actualTaskAddedName = waitForElement(verifyAddedTask).getText();
-        Assert.assertEquals(actualTaskAddedName,taskName);
+        Assert.assertEquals(actualTaskAddedName, taskName);
+    }
+    public void addNewTask(){
+        String taskName = "Task: " + faker.company().buzzword();
+        String taskDescription = faker.lorem().sentence(10);
+
+        navigateToTaskPage();
+        enterTaskName(taskName);
+        selectAssignee();
+        selectTaskDate();
+        enterTaskDescription(taskDescription);
+        saveTask();
+        verifyTaskCreated(taskName);
     }
 }
