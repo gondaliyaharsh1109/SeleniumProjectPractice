@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 public class DepartmentPage extends BasePage {
+    BasePage basePage = new BasePage(driver);
     Faker faker = new Faker();
     Actions actions = new Actions(driver);
     By newButton = By.xpath("//button[@tabindex='0']");
@@ -16,7 +17,7 @@ public class DepartmentPage extends BasePage {
     By enterLocationName = By.id("location");
     By clickSaveButton = By.xpath("//button[contains(text(),'Save')]");
     By visibleCreateDepartmentText = By.xpath("//li[@class='MuiBreadcrumbs-li']");
-    By clickOnDepartmentToEdit = By.xpath("(//div[@data-field='departmentName'])[2]");
+    By firstDepartmentNameInList = By.xpath("(//div[@data-field='departmentName'])[2]");
     By searchDepartment = By.xpath("//input[@placeholder='Search with DepartmentName']");
     By verifyEditDepartmentText = By.xpath("//p[contains(text(),'Edit Department')]");
     By editDepartmentNameField = By.xpath("//input[@id='departmentName']");
@@ -53,12 +54,19 @@ public class DepartmentPage extends BasePage {
         waitForElement(enterDepartmentName).sendKeys(departmentName);
         waitForElement(enterLocationName).sendKeys(locationName);
         clickSaveButton();
+        String actualMessage = basePage.toastMessage();
+        String expectedMessage = "Department created successfully.";
+        Assert.assertEquals(actualMessage,expectedMessage);
+        waitForElement(searchDepartment).sendKeys(departmentName);
+        waitForElement(searchDepartment).sendKeys(Keys.ENTER);
+        String actualDepartmentName = waitForElement(firstDepartmentNameInList).getText();
+        Assert.assertEquals(actualDepartmentName,departmentName);
     }
     public void editDepartment(String oldName, String newName){
         WebElement searchDptName = waitForElement(searchDepartment);
         searchDptName.sendKeys(oldName);
         searchDptName.sendKeys(Keys.ENTER);
-        WebElement searchDepartment = waitForElement(clickOnDepartmentToEdit);
+        WebElement searchDepartment = waitForElement(firstDepartmentNameInList);
         actions.doubleClick(searchDepartment).perform();
         waitForElement(editDepartmentNameField).clear();
         waitForElement(editDepartmentNameField).sendKeys(newName);
@@ -73,7 +81,7 @@ public class DepartmentPage extends BasePage {
         waitForElement(searchDepartment).sendKeys(actualVerifyDepartmentName);
         waitForElement(searchDepartment).sendKeys(Keys.ENTER);
         waitForElementToBeInvisible(loaderToBeInvisible);
-        actions.doubleClick(waitForElement(clickOnDepartmentToEdit)).perform();
+        actions.doubleClick(waitForElement(firstDepartmentNameInList)).perform();
         String actualEditDepartmentText = waitForElement(verifyEditDepartmentText).getText();
         String expectedEditDepartmentText = "Edit Department";
         Assert.assertEquals(actualEditDepartmentText,expectedEditDepartmentText);

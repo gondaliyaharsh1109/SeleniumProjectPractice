@@ -20,8 +20,6 @@ public class DepartmentTest extends BaseTest {
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
         departmentPage.executeAddDepartment();
-        String expectedMessage = "Department created successfully.";
-        Assert.assertEquals(loginPage.toastMessage(),expectedMessage);
     }
     @Test
     public void deleteDepartmentValidationWithPosition(){
