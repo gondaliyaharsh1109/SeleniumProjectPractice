@@ -54,7 +54,7 @@ public class DepartmentPage extends BasePage {
         waitForElement(enterDepartmentName).sendKeys(departmentName);
         waitForElement(enterLocationName).sendKeys(locationName);
         clickSaveButton();
-        String actualMessage = basePage.toastMessage();
+        String actualMessage = basePage.verifyToastMessage();
         String expectedMessage = "Department created successfully.";
         Assert.assertEquals(actualMessage,expectedMessage);
         waitForElement(searchDepartment).sendKeys(departmentName);
@@ -84,7 +84,8 @@ public class DepartmentPage extends BasePage {
         waitForElement(searchDepartment).sendKeys(Keys.ENTER);
         waitForElementToBeInvisible(loaderToBeInvisible);
     }
-    public void openDepartmentForEditing() {
+    public void goToDepartmentDetails(String departmentName) {
+        searchDepartment(departmentName);
         actions.doubleClick(waitForElement(firstDepartmentNameInList)).perform();
         String actualEditDepartmentText = waitForElement(verifyEditDepartmentText).getText();
         String expectedEditDepartmentText = "Edit Department";
@@ -103,8 +104,7 @@ public class DepartmentPage extends BasePage {
     }
     public void verifyDeleteDepartmentValidationWithPosition(){
         String departmentName = getDepartmentNameFromPositionTab();
-        searchDepartment(departmentName);
-        openDepartmentForEditing();
+        goToDepartmentDetails(departmentName);
         deleteDepartmentAndVerifyConfirm();
         verifyDepartmentAttachedValidation();
     }

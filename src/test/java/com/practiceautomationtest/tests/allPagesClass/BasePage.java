@@ -31,7 +31,7 @@ public class BasePage {
     public List<WebElement> presenceOfAllElements(By locator) {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
-    public String toastMessage(){
+    public String verifyToastMessage(){
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 css-1cp532n']")));
         return errorMessage.getText();
     }
