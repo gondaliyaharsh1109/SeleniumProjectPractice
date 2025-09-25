@@ -36,7 +36,7 @@ public class EmployeePage extends BasePage {
     By departmentSelectionBtn = By.xpath("//input[@id='departmentName']/following-sibling::div/button");
     By departmentNameSelection = By.xpath("(//div[@data-field='departmentName'])[2]");
     By positionSelectionBtn = By.xpath("//input[@id='positionName']/following-sibling::div/button");
-    By positionNameSelection = By.xpath("(//div[contains(@data-field,'positionName')])[2]");
+    By positionNameSelection = By.xpath("(//div[contains(@data-field,'positionName')])[3]");
     By saveBtn = By.xpath("//button[contains(text(),'Save')]");
     By employeeCreatedToastMessage = By.xpath("//p[contains(text(),'Employee created successfully.')]");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
