@@ -12,7 +12,7 @@ public class DepartmentPage extends BasePage {
     BasePage basePage = new BasePage(driver);
     Faker faker = new Faker();
     Actions actions = new Actions(driver);
-    By newButton = By.xpath("//button[@tabindex='0']");
+    By newButton = By.xpath("//button[contains(text(),'New')]");
     By enterDepartmentName = By.id("departmentName");
     By enterLocationName = By.id("location");
     By clickSaveButton = By.xpath("//button[contains(text(),'Save')]");
@@ -37,7 +37,7 @@ public class DepartmentPage extends BasePage {
         waitForElement(newButton).click();
     }
     public void visitCreateDepartmentPage(){
-        visit("https://employee-cicd.vercel.app/department/new");
+        visits("https://employee-cicd.vercel.app/department/new");
     }
     public void confirmVisibleCreateDepartmentText(){
         waitForElement(visibleCreateDepartmentText);
