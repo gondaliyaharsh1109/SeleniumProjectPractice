@@ -1,10 +1,8 @@
 package com.practiceautomationtest.tests.PositionTestPage;
 import com.github.javafaker.Faker;
-import com.practiceautomationtest.tests.allPagesClass.LoginPage;
-import com.practiceautomationtest.tests.allPagesClass.PositionPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.PositionPage;
 import com.practiceautomationtest.tests.BaseTest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
