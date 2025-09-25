@@ -1,6 +1,6 @@
 package com.practiceautomationtest.tests.DepartmentTestPage;
-import com.practiceautomationtest.tests.allPagesClass.DepartmentPage;
-import com.practiceautomationtest.tests.allPagesClass.LoginPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.DepartmentPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

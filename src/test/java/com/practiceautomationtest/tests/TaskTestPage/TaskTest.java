@@ -1,8 +1,8 @@
 package com.practiceautomationtest.tests.TaskTestPage;
 
 import com.practiceautomationtest.tests.BaseTest;
-import com.practiceautomationtest.tests.allPagesClass.LoginPage;
-import com.practiceautomationtest.tests.allPagesClass.TaskPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.TaskPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

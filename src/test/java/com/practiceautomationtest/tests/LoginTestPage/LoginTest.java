@@ -1,6 +1,6 @@
 package com.practiceautomationtest.tests.LoginTestPage;
 
-import com.practiceautomationtest.tests.allPagesClass.LoginPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;

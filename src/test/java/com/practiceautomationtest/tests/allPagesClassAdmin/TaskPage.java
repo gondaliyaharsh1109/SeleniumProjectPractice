@@ -1,4 +1,4 @@
-package com.practiceautomationtest.tests.allPagesClass;
+package com.practiceautomationtest.tests.allPagesClassAdmin;
 
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;

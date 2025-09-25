@@ -1,4 +1,4 @@
-package com.practiceautomationtest.tests.allPagesClass;
+package com.practiceautomationtest.tests.allPagesClassAdmin;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

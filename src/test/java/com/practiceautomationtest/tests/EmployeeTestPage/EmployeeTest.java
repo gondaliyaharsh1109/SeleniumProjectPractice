@@ -1,7 +1,7 @@
 package com.practiceautomationtest.tests.EmployeeTestPage;
 
-import com.practiceautomationtest.tests.allPagesClass.EmployeePage;
-import com.practiceautomationtest.tests.allPagesClass.LoginPage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.EmployeePage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
