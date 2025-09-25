@@ -18,7 +18,7 @@ public class LeaveTest extends BaseTest {
         leavePage.addLeave("Sick");
     }
     @Test
-    public void verifyLeaveStatus(){
+    public void verifyLeaveStatusAsEmployee(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginEmployee("adena.leannon@yahoo.com","Pytheta123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/leaveEmp";

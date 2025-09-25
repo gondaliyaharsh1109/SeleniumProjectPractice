@@ -1,6 +1,7 @@
 package com.practiceautomationtest.tests.allPagesClassAdmin;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
@@ -45,6 +46,18 @@ public class LoginPage extends BasePage {
     public void executeLoginEmployee(String username, String password, boolean verify) {
         visit();
         waitForElement(enterEmail).sendKeys(username);
+        waitForElement(enterPassword).sendKeys(password);
+        clickLoginButton();
+        if (verify){
+            visibleLeaveText();
+        }
+    }
+    public void executeLoginEmployeeAfterUpdatingLeaveStatus(String username, String password, boolean verify) {
+        waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(enterEmail).sendKeys(Keys.DELETE);
+        waitForElement(enterEmail).sendKeys(username);
+        waitForElement(enterPassword).sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        waitForElement(enterPassword).sendKeys(Keys.DELETE);
         waitForElement(enterPassword).sendKeys(password);
         clickLoginButton();
         if (verify){

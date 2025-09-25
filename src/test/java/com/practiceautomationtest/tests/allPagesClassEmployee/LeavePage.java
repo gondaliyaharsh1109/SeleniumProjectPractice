@@ -42,115 +42,105 @@ public class LeavePage extends BasePage {
     By verifyUpdateLeaveStatusText = By.xpath("//p[contains(text(),'Update Leave Status')]");
     By leaveStatusUpdatedToastMessage = By.xpath("//p[contains(text(),'Leave status updated successfully')]");
     By verifyLeaveStatusAsEmployee = By.xpath("(//div[(@data-field='leave_status')])[2]");
-    By verifyEmailAfterLogin = By.xpath("//h6[contains(text(),'adena.leannon@yahoo.com')]");
 
     public LeavePage(WebDriver driver){
         super(driver);
     }
-    public void addLeave(String leaveTypeSelect){
-        String randomReason = faker.chuckNorris().fact();
+    public void openLeaveForm() {
         waitForElement(newBtn).click();
         String actualCreateLeaveStatusText = waitForElement(verifyCreateLeaveText).getText();
-        String expectedCreateLeaveStatusText = "Create Leave Status";
-        Assert.assertEquals(actualCreateLeaveStatusText,expectedCreateLeaveStatusText);
-        waitForElement(leaveTypeSelection).click();
-        waitForElement(dropDownSelection);
-        List<WebElement> leaveTypeDropDown = driver.findElements(dropDownSelection);
-        for(WebElement leaveType : leaveTypeDropDown){
-            if(leaveType.getText().equals(leaveTypeSelect)){
-                leaveType.click();
-                break;
-            }
-        }
-        waitForElement(clickOnFromDateBtn).click();
-        waitForElement(selectFromDate).click();
-        waitForElement(clickOnToDateBtn).click();
-        waitForElement(clickBtnForNextMonth).click();
-        waitForElement(selectToDate).click();
-        waitForElement(reasonInputField).sendKeys(randomReason);
-        waitForElement(clickSaveButton).click();
-        String actualLeaveCreateToastMessage = waitForElement(verifyLeaveCreatedToastMessage).getText();
-        String expectedLeaveCreateToastMessage = "Leave sent successfully.";
-        Assert.assertEquals(actualLeaveCreateToastMessage,expectedLeaveCreateToastMessage);
-        waitForElement(clickBtnForLogout).click();
-        waitForElement(clickOnLogoutBtn).click();
-        String actualLoginText = waitForElement(verifyLoginText).getText();
-        String expectedLoginText = "LOGIN";
-        Assert.assertEquals(actualLoginText,expectedLoginText);
+        Assert.assertEquals(actualCreateLeaveStatusText, "Create Leave Status");
     }
-    public void updateLeaveStatusAndVerifyAsEmployee(String leaveTypeSelectInEmployee, String statusTypeSelectInAdmin, String updateLeaveStatusInAdmin){
-        LoginPage loginPage = new LoginPage(driver);
-        String randomReason = faker.chuckNorris().fact();
-        waitForElement(newBtn).click();
-        String actualCreateLeaveStatusText = waitForElement(verifyCreateLeaveText).getText();
-        String expectedCreateLeaveStatusText = "Create Leave Status";
-        Assert.assertEquals(actualCreateLeaveStatusText,expectedCreateLeaveStatusText);
+    public void selectLeaveType(String leaveTypeSelect) {
         waitForElement(leaveTypeSelection).click();
-        waitForElement(dropDownSelection);
+        waitForElement(dropDownSelection); // ensures dropdown is visible
+
         List<WebElement> leaveTypeDropDown = driver.findElements(dropDownSelection);
-        for(WebElement leaveType : leaveTypeDropDown){
-            if(leaveType.getText().equals(leaveTypeSelectInEmployee)){
+        for (WebElement leaveType : leaveTypeDropDown) {
+            if (leaveType.getText().equals(leaveTypeSelect)) {
                 leaveType.click();
                 break;
             }
         }
+    }
+    public void enterLeaveReason() {
+        String randomReason = faker.chuckNorris().fact();
+        waitForElement(reasonInputField).sendKeys(randomReason);
+    }
+    public void addLeave(String leaveTypeSelect) {
+        openLeaveForm();
+        selectLeaveType(leaveTypeSelect);
+        enterLeaveReason();
+    }
+    public void createLeaveAsEmployee(String leaveType) {
+        String randomReason = faker.chuckNorris().fact();
+
+        waitForElement(newBtn).click();
+        Assert.assertEquals(waitForElement(verifyCreateLeaveText).getText(), "Create Leave Status");
+
+        selectFromDropdown(leaveTypeSelection, dropDownSelection, leaveType);
+
         waitForElement(clickOnFromDateBtn).click();
         waitForElement(selectFromDate).click();
         waitForElement(clickOnToDateBtn).click();
         waitForElement(clickBtnForNextMonth).click();
         waitForElement(selectToDate).click();
+
         waitForElement(reasonInputField).sendKeys(randomReason);
         waitForElement(clickSaveButton).click();
-        String actualLeaveCreateToastMessage = waitForElement(verifyLeaveCreatedToastMessage).getText();
-        String expectedLeaveCreateToastMessage = "Leave sent successfully.";
-        Assert.assertEquals(actualLeaveCreateToastMessage,expectedLeaveCreateToastMessage);
+
+        Assert.assertEquals(waitForElement(verifyLeaveCreatedToastMessage).getText(), "Leave sent successfully.");
+    }
+    public void logout() {
         waitForElement(clickBtnForLogout).click();
         waitForElement(clickOnLogoutBtn).click();
-        String actualLoginText = waitForElement(verifyLoginText).getText();
-        String expectedLoginText = "LOGIN";
-        Assert.assertEquals(actualLoginText,expectedLoginText);
-        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+    }
+    public void updateLeaveStatusAsAdmin(String statusFilter, String updateStatus) {
         waitForElement(clickOnLeaveTab).click();
-        waitForElement(statusSelection).click();
-        waitForElement(dropDownSelection);
-        List<WebElement> statusSelectionDropdown = driver.findElements(dropDownSelection);
-        for(WebElement statusSelect : statusSelectionDropdown){
-            if(statusSelect.getText().equals(statusTypeSelectInAdmin)){
-                statusSelect.click();
-                break;
-            }
-        }
+
+        selectFromDropdown(statusSelection, dropDownSelection, statusFilter);
+
         waitForElementToBeInvisible(loaderToBeInvisible);
         actions.doubleClick(waitForElement(clickOnFirstEmployee)).perform();
+
         waitForElementToBeInvisible(loaderToBeInvisible);
-        String actualUpdateLeaveStatusText = waitForElement(verifyUpdateLeaveStatusText).getText();
-        String expectedUpdateLeaveStatusText = "Update Leave Status";
-        Assert.assertEquals(actualUpdateLeaveStatusText,expectedUpdateLeaveStatusText);
-        waitForElement(statusSelection).click();
-        waitForElement(dropDownSelection);
-        List<WebElement> leaveStatusSelection = driver.findElements(dropDownSelection);
-        for(WebElement leaveStatusSelect : leaveStatusSelection){
-            if(leaveStatusSelect.getText().equals(updateLeaveStatusInAdmin)){
-                leaveStatusSelect.click();
+        Assert.assertEquals(waitForElement(verifyUpdateLeaveStatusText).getText(), "Update Leave Status");
+
+        selectFromDropdown(statusSelection, dropDownSelection, updateStatus);
+        waitForElement(clickSaveButton).click();
+
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        Assert.assertEquals(waitForElement(leaveStatusUpdatedToastMessage).getText(), "Leave status updated successfully");
+    }
+    public void verifyUpdatedStatusAsEmployee(String expectedStatus) {
+        String actualUpdatedStatus = waitForElement(verifyLeaveStatusAsEmployee).getText();
+        Assert.assertEquals(actualUpdatedStatus, expectedStatus);
+    }
+    public void selectFromDropdown(By dropdownBtn, By dropdownOptions, String optionText) {
+        waitForElement(dropdownBtn).click();
+        waitForElement(dropdownOptions);
+
+        List<WebElement> options = driver.findElements(dropdownOptions);
+        for (WebElement option : options) {
+            if (option.getText().equals(optionText)) {
+                option.click();
                 break;
             }
         }
-        waitForElement(clickSaveButton).click();
-        waitForElementToBeInvisible(loaderToBeInvisible);
-        String actualStatusUpdateToastMessage = waitForElement(leaveStatusUpdatedToastMessage).getText();
-        String expectedStatusUpdateToastMessage = "Leave status updated successfully";
-        Assert.assertEquals(actualStatusUpdateToastMessage,expectedStatusUpdateToastMessage);
-        waitForElement(clickBtnForLogout).click();
-        waitForElement(clickOnLogoutBtn).click();
-        waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        waitForElement(enterEmail).sendKeys(Keys.DELETE);
-        waitForElement(enterEmail).sendKeys("adena.leannon@yahoo.com");
-        waitForElement(enterPassword).sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        waitForElement(enterPassword).sendKeys(Keys.DELETE);
-        waitForElement(enterPassword).sendKeys("Pytheta123!");
-        waitForElement(loginButton).click();
-        Assert.assertEquals(actualLoginText,expectedLoginText);
-        String actualUpdatedStatusInEmployee = waitForElement(verifyLeaveStatusAsEmployee).getText();
-        Assert.assertEquals(actualUpdatedStatusInEmployee,updateLeaveStatusInAdmin);
+    }
+    public void updateLeaveStatusAndVerifyAsEmployee(String leaveTypeSelectInEmployee, String statusTypeSelectInAdmin, String updateLeaveStatusInAdmin) {
+
+        LoginPage loginPage = new LoginPage(driver);
+
+        createLeaveAsEmployee(leaveTypeSelectInEmployee);
+        logout();
+        Assert.assertEquals(waitForElement(verifyLoginText).getText(), "LOGIN");
+
+        loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
+        updateLeaveStatusAsAdmin(statusTypeSelectInAdmin, updateLeaveStatusInAdmin);
+        logout();
+
+        loginPage.executeLoginEmployeeAfterUpdatingLeaveStatus("adena.leannon@yahoo.com", "Pytheta123!", true);
+        verifyUpdatedStatusAsEmployee(updateLeaveStatusInAdmin);
     }
 }
