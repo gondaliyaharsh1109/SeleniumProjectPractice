@@ -1,5 +1,6 @@
-package com.practiceautomationtest.tests.LoginTestPage;
+package com.practiceautomationtest.tests.LoginTestPageAdmin;
 
+import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.testng.Assert;
@@ -9,11 +10,12 @@ public class LoginTest extends BaseTest{
 
     @Test
     public void positiveTestLogin(){
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
-        loginPage.executeLogin("admin@gmail.com","Admin123!",true);
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.visibleDepartmentText();
     }
 
@@ -21,7 +23,7 @@ public class LoginTest extends BaseTest{
     public void incorrectUserNameTest(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
-        loginPage.executeLogin("admin@yahoo.com","Admin123!",false);
+        loginPage.executeLoginAdmin("admin@yahoo.com","Admin123!",false);
         String expectedErrorMessage = "No account with this email has been registered.";
         Assert.assertEquals(loginPage.verifyToastMessage(),expectedErrorMessage);
     }
@@ -30,7 +32,7 @@ public class LoginTest extends BaseTest{
     public void incorrectPasswordTest(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
-        loginPage.executeLogin("admin@gmail.com","Admin123@");
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123@",false);
         String expectedMessage = "Invalid credentials.";
         Assert.assertEquals(loginPage.verifyToastMessage(),expectedMessage);
     }

@@ -46,7 +46,7 @@ public class PositionPage extends BasePage{
         waitForElement(newButton).click();
     }
     public void visitCreatePosition(){
-        visit("https://employee-cicd.vercel.app/position/new");
+        visits("https://employee-cicd.vercel.app/position/new");
     }
     public void visibleCreatePositionText(){
         waitForElement(visibleCreatePositionText);

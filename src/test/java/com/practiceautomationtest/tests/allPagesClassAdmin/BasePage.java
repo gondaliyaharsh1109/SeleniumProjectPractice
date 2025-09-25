@@ -16,7 +16,7 @@ public class BasePage {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-    public void visit(String url) {
+    public void visits(String url) {
         driver.get(url);
     }
     public String currentUrl() {

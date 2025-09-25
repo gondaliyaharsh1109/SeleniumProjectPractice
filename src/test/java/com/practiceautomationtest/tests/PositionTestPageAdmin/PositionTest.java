@@ -1,4 +1,4 @@
-package com.practiceautomationtest.tests.PositionTestPage;
+package com.practiceautomationtest.tests.PositionTestPageAdmin;
 import com.github.javafaker.Faker;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.PositionPage;
@@ -12,7 +12,7 @@ public class PositionTest extends BaseTest {
     public void addPosition(){
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
+        loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         String uniqueName = faker.name().firstName();
@@ -28,7 +28,7 @@ public class PositionTest extends BaseTest {
     public void searchAndCountPositions() {
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
+        loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         positionPage.executeSearchPosition("Manager_175800");
@@ -37,7 +37,7 @@ public class PositionTest extends BaseTest {
     public void editAndDeletePosition(){
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
+        loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         String uniquePosition = "Manager_" + System.currentTimeMillis();
@@ -67,7 +67,7 @@ public class PositionTest extends BaseTest {
     public void deletePositionValidationWithEmployee(){
         LoginPage loginPage = new LoginPage(driver);
         PositionPage positionPage = new PositionPage(driver);
-        loginPage.executeLogin("admin@gmail.com", "Admin123!", true);
+        loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         positionPage.verifyDeletePositionValidationWithEmployee();

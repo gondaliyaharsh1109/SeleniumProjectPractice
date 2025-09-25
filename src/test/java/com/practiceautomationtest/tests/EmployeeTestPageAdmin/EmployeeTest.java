@@ -11,7 +11,7 @@ public class EmployeeTest extends BaseTest {
     public void addEmployee(){
         LoginPage loginPage = new LoginPage(driver);
         EmployeePage employeePage = new EmployeePage(driver);
-        loginPage.executeLogin("admin@gmail.com","Admin123!",true);
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         employeePage.executeAddEmployee();
@@ -20,7 +20,7 @@ public class EmployeeTest extends BaseTest {
     public void editEmployee(){
         LoginPage loginPage = new LoginPage(driver);
         EmployeePage employeePage = new EmployeePage(driver);
-        loginPage.executeLogin("admin@gmail.com","Admin123!",true);
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         employeePage.executeEditEmployee();
