@@ -4,29 +4,25 @@ import com.github.javafaker.Faker;
 import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class LeavePage extends BasePage {
-    LoginPage loginPage = new LoginPage(driver);
-    BasePage basePage = new BasePage(driver);
     Faker faker = new Faker();
     Actions actions = new Actions(driver);
-    By enterEmail = By.xpath("//input[@type='email']");
-    By enterPassword = By.id("outlined-adornment-password");
-    By loginButton = By.xpath("//button[@type='submit']");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
     By newBtn = By.xpath("//button[contains(text(),'New')]");
     By verifyCreateLeaveText = By.xpath("//p[contains(text(),'Create Leave Status')]");
     By leaveTypeSelection = By.xpath("//div[@id='id__leaveType']");
     By dropDownSelection = By.xpath("//li[@role='option']");
     By clickOnFromDateBtn = By.xpath("(//button)[7]");
-    By selectFromDate = By.xpath("//button[contains(text(),'28')]");
+    By selectFromDate = By.xpath("//button[contains(text(),'3')]");
     By clickOnToDateBtn = By.xpath("(//button)[8]");
     By clickBtnForNextMonth = By.xpath("//button[@title='Next month']");
     By selectToDate = By.xpath("//button[contains(text(),'10')]");
@@ -74,6 +70,11 @@ public class LeavePage extends BasePage {
     }
     public void createLeaveAsEmployee(String leaveType) {
         String randomReason = faker.chuckNorris().fact();
+        LocalDate today = LocalDate.now();
+        LocalDate futureDate = today.plusDays(7);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        String fromDate = today.format(formatter);
+        String toDate = futureDate.format(formatter);
 
         waitForElement(newBtn).click();
         Assert.assertEquals(waitForElement(verifyCreateLeaveText).getText(), "Create Leave Status");
@@ -81,6 +82,7 @@ public class LeavePage extends BasePage {
         selectFromDropdown(leaveTypeSelection, dropDownSelection, leaveType);
 
         waitForElement(clickOnFromDateBtn).click();
+        waitForElement(clickBtnForNextMonth).click();
         waitForElement(selectFromDate).click();
         waitForElement(clickOnToDateBtn).click();
         waitForElement(clickBtnForNextMonth).click();

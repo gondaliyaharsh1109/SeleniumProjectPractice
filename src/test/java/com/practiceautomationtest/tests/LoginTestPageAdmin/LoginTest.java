@@ -9,14 +9,26 @@ import org.testng.annotations.Test;
 public class LoginTest extends BaseTest{
 
     @Test
-    public void positiveTestLogin(){
+    public void positiveTestLoginAsAdmin(){
         BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
-        loginPage.visibleDepartmentText();
+        loginPage.verifyAdminTabs();
+        loginPage.verifySearchResults("De");
+    }
+    @Test
+    public void positiveTestLoginAsEmployee(){
+        BasePage basePage = new BasePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.visit();
+        loginPage.executeLoginAdmin("adena.leannon@yahoo.com","Pytheta123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/leaveEmp";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
+        loginPage.verifyEmployeeTabs();
+        loginPage.verifySearchResults("e");
     }
 
     @Test
