@@ -24,7 +24,7 @@ public class LoginTest extends BaseTest{
         BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
-        loginPage.executeLoginAdmin("adena.leannon@yahoo.com","Pytheta123!",true);
+        loginPage.executeLoginEmployee("adena.leannon@yahoo.com","Pytheta123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/leaveEmp";
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.verifyEmployeeTabs();

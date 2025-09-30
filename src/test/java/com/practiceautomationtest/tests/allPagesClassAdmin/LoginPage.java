@@ -48,7 +48,7 @@ public class LoginPage extends BasePage {
             visibleDepartmentText();
         }
         verifyRoleAfterLogin("EMS: Admin");
-//        verifyEmailAfterLogin("admin@gmail.com");
+        verifyEmailAfterLogin("admin@gmail.com");
     }
     public void executeLoginEmployee(String username, String password, boolean verify) {
         visit();
@@ -59,7 +59,7 @@ public class LoginPage extends BasePage {
             visibleLeaveText();
         }
         verifyRoleAfterLogin("EMS: Employee");
-//        verifyEmailAfterLogin("adena.leannon@yahoo.com");
+        verifyEmailAfterLogin("adena.leannon@yahoo.com");
     }
     public void executeLoginEmployeeAfterUpdatingLeaveStatus(String username, String password, boolean verify) {
         waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -105,11 +105,15 @@ public class LoginPage extends BasePage {
         }
     }
     public void verifyRoleAfterLogin(String expectedRole){
-        String actualRole = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedRole);
+        String xpath = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedRole);
+        WebElement element = driver.findElement(By.xpath(xpath));
+        String actualRole = element.getText();
         Assert.assertEquals(actualRole,expectedRole);
     }
-//    public void verifyEmailAfterLogin(String expectedEmail){
-//        String actualRole = waitForElement(verifyEmailAfterLogin).getText();
-//        Assert.assertEquals(actualRole,expectedEmail);
-//    }
+    public void verifyEmailAfterLogin(String expectedEmail){
+        String xpath = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedEmail);
+        WebElement element = driver.findElement(By.xpath(xpath));
+        String actualEmail = element.getText();
+        Assert.assertEquals(actualEmail,expectedEmail);
+    }
 }
