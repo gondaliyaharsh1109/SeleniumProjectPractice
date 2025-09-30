@@ -4,12 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LoginPage extends BasePage {
+    Actions actions = new Actions(driver);
     By enterEmail = By.xpath("//input[@type='email']");
     By enterPassword = By.id("outlined-adornment-password");
     By departmentText = By.xpath("//div[@class='MuiBox-root css-axw7ok']");
@@ -17,6 +20,7 @@ public class LoginPage extends BasePage {
     By verifyLeaveTextAfterLogin = By.xpath("(//span[contains(text(),'Leave')])[2]");
     By verifyLoggedInByText = By.xpath("//div[@role='button']");
     By verifyTabsBySearch = By.xpath("//input[@placeholder='Search']");
+    By clickProfileBtn = By.xpath("(//button[@class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1yxmbwk'])[1]");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -27,7 +31,6 @@ public class LoginPage extends BasePage {
     }
 
     public void clickLoginButton() {
-        //driver.findElement(loginButton).click();
         waitForElement(loginButton).click();
     }
 
@@ -47,8 +50,10 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleDepartmentText();
         }
-        verifyRoleAfterLogin("EMS: Admin");
-        verifyEmailAfterLogin("admin@gmail.com");
+        waitForElement(clickProfileBtn).click();
+        verifyEmailAndRoleAfterLogin("EMS: Admin","admin@gmail.com");
+        verifyDetailsByClickingProfileBtn("PA","Email: admin@gmail.com","PyTheta Admin","Role: Admin");
+        actions.sendKeys(Keys.ESCAPE).perform();
     }
     public void executeLoginEmployee(String username, String password, boolean verify) {
         visit();
@@ -58,8 +63,10 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleLeaveText();
         }
-        verifyRoleAfterLogin("EMS: Employee");
-        verifyEmailAfterLogin("adena.leannon@yahoo.com");
+        waitForElement(clickProfileBtn).click();
+        verifyEmailAndRoleAfterLogin("EMS: Employee","adena.leannon@yahoo.com");
+        verifyDetailsByClickingProfileBtn("MG","Email: adena.leannon@yahoo.com","Melodee Gulgowski","Role: Employee");
+        actions.sendKeys(Keys.ESCAPE).perform();
     }
     public void executeLoginEmployeeAfterUpdatingLeaveStatus(String username, String password, boolean verify) {
         waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -104,16 +111,38 @@ public class LoginPage extends BasePage {
             Assert.assertTrue(tabName.toLowerCase().contains(searchText.toLowerCase()));
         }
     }
-    public void verifyRoleAfterLogin(String expectedRole){
-        String xpath = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedRole);
-        WebElement element = driver.findElement(By.xpath(xpath));
-        String actualRole = element.getText();
+    public void verifyEmailAndRoleAfterLogin(String expectedRole, String expectedEmail){
+        String xpathForRole = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedRole);
+        WebElement elementForRole = driver.findElement(By.xpath(xpathForRole));
+        String actualRole = elementForRole.getText();
         Assert.assertEquals(actualRole,expectedRole);
-    }
-    public void verifyEmailAfterLogin(String expectedEmail){
-        String xpath = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedEmail);
-        WebElement element = driver.findElement(By.xpath(xpath));
-        String actualEmail = element.getText();
+
+        String xpathForEmail = String.format("//h6[contains(@class,'MuiTypography-subtitle2') and text()='%s']",expectedEmail);
+        WebElement elementForEmail = driver.findElement(By.xpath(xpathForEmail));
+        String actualEmail = elementForEmail.getText();
         Assert.assertEquals(actualEmail,expectedEmail);
+    }
+    public void verifyDetailsByClickingProfileBtn(String expectedInitials, String expectedEmail, String expectedName, String expectedRole){
+        String xpathForInitials = "(//div[contains(@class,'MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault')])[2]";
+        WebElement elementForInitials = driver.findElement(By.xpath(xpathForInitials));
+        String actualInitials = elementForInitials.getText();
+        Assert.assertEquals(actualInitials,expectedInitials);
+
+        String xpathForExpectedName = String.format("//p[contains(@class,'MuiTypography-root MuiTypography-body1') and text()='%s']", expectedName);
+        WebElement elementForName = driver.findElement(By.xpath(xpathForExpectedName));
+        String actualName = elementForName.getText();
+        Assert.assertEquals(actualName,expectedName);
+
+        String xpathForExpectedEmail = "(//span[contains(@class,'MuiTypography-root MuiTypography-caption')])[2]";
+        WebElement elementForEmail = driver.findElement(By.xpath(xpathForExpectedEmail));
+        String actualEmail = elementForEmail.getText();
+        System.out.println(actualEmail);
+        Assert.assertEquals(actualEmail,expectedEmail);
+
+        String xpathForExpectedRole = "(//span[contains(@class,'MuiTypography-root MuiTypography-caption')])[3]";
+        WebElement elementForRole = driver.findElement(By.xpath(xpathForExpectedRole));
+        String actualRole = elementForRole.getText();
+        System.out.println(actualRole);
+        Assert.assertEquals(actualRole,expectedRole);
     }
 }
