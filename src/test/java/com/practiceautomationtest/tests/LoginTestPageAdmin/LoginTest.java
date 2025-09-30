@@ -5,6 +5,8 @@ import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -49,5 +51,16 @@ public class LoginTest extends BaseTest{
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123@",false);
         String expectedMessage = "Invalid credentials.";
         Assert.assertEquals(loginPage.verifyToastMessage(),expectedMessage);
+    }
+
+    @Test
+    public void clickingToggleBtnForSideBar(){
+        BasePage basePage = new BasePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.visit();
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
+        loginPage.clickingToggleBtn();
     }
 }
