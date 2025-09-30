@@ -28,6 +28,9 @@ public class BasePage {
     public void waitForElementToBeInvisible(By locator){
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
+    public void waitForElementsToBeInvisible(WebElement element){
+        wait.until(ExpectedConditions.invisibilityOfAllElements(element));
+    }
     public List<WebElement> presenceOfAllElements(By locator) {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }

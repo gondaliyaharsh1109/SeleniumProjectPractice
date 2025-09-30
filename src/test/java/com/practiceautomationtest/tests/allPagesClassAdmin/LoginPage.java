@@ -5,7 +5,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import java.util.List;
@@ -21,6 +20,9 @@ public class LoginPage extends BasePage {
     By verifyLoggedInByText = By.xpath("//div[@role='button']");
     By verifyTabsBySearch = By.xpath("//input[@placeholder='Search']");
     By clickProfileBtn = By.xpath("(//button[@class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1yxmbwk'])[1]");
+    By clickToggleBtnToHide = By.cssSelector("svg[data-testid='KeyboardDoubleArrowLeftIcon']");
+    By clickToggleBtnToShow = By.cssSelector("svg[data-testid='MenuIcon']");
+    By verifySideBar = By.xpath("//span[contains(@class, 'MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-1ulp22j')]");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -50,10 +52,6 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleDepartmentText();
         }
-        waitForElement(clickProfileBtn).click();
-        verifyEmailAndRoleAfterLogin("EMS: Admin","admin@gmail.com");
-        verifyDetailsByClickingProfileBtn("PA","Email: admin@gmail.com","PyTheta Admin","Role: Admin");
-        actions.sendKeys(Keys.ESCAPE).perform();
     }
     public void executeLoginEmployee(String username, String password, boolean verify) {
         visit();
@@ -63,10 +61,6 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleLeaveText();
         }
-        waitForElement(clickProfileBtn).click();
-        verifyEmailAndRoleAfterLogin("EMS: Employee","adena.leannon@yahoo.com");
-        verifyDetailsByClickingProfileBtn("MG","Email: adena.leannon@yahoo.com","Melodee Gulgowski","Role: Employee");
-        actions.sendKeys(Keys.ESCAPE).perform();
     }
     public void executeLoginEmployeeAfterUpdatingLeaveStatus(String username, String password, boolean verify) {
         waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -122,7 +116,7 @@ public class LoginPage extends BasePage {
         String actualEmail = elementForEmail.getText();
         Assert.assertEquals(actualEmail,expectedEmail);
     }
-    public void verifyDetailsByClickingProfileBtn(String expectedInitials, String expectedEmail, String expectedName, String expectedRole){
+    public void verifyDetailsThroughProfileBtn(String expectedInitials, String expectedEmail, String expectedName, String expectedRole){
         String xpathForInitials = "(//div[contains(@class,'MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault')])[2]";
         WebElement elementForInitials = driver.findElement(By.xpath(xpathForInitials));
         String actualInitials = elementForInitials.getText();
@@ -144,5 +138,23 @@ public class LoginPage extends BasePage {
         String actualRole = elementForRole.getText();
         System.out.println(actualRole);
         Assert.assertEquals(actualRole,expectedRole);
+    }
+    public void verifyAdminUserDetailsThroughProfileBtn(){
+        waitForElement(clickProfileBtn).click();
+        verifyEmailAndRoleAfterLogin("EMS: Admin","admin@gmail.com");
+        verifyDetailsThroughProfileBtn("PA","Email: admin@gmail.com","PyTheta Admin","Role: Admin");
+        actions.sendKeys(Keys.ESCAPE).perform();
+    }
+    public void verifyEmployeeUserDetailsThroughProfileBtn(){
+        waitForElement(clickProfileBtn).click();
+        verifyEmailAndRoleAfterLogin("EMS: Employee","adena.leannon@yahoo.com");
+        verifyDetailsThroughProfileBtn("MG","Email: adena.leannon@yahoo.com","Melodee Gulgowski","Role: Employee");
+        actions.sendKeys(Keys.ESCAPE).perform();
+    }
+    public void clickingToggleBtn(){
+        waitForElement(clickToggleBtnToHide).click();
+        waitForElementsToBeInvisible(waitForElement(verifySideBar));
+        waitForElement(clickToggleBtnToShow).click();
+        Assert.assertTrue(waitForElement(verifySideBar).isDisplayed());
     }
 }
