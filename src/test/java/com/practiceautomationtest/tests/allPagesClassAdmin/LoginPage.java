@@ -52,10 +52,6 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleDepartmentText();
         }
-//        waitForElement(clickProfileBtn).click();
-//        verifyEmailAndRoleAfterLogin("EMS: Admin","admin@gmail.com");
-//        verifyDetailsByClickingProfileBtn("PA","Email: admin@gmail.com","PyTheta Admin","Role: Admin");
-//        actions.sendKeys(Keys.ESCAPE).perform();
     }
     public void executeLoginEmployee(String username, String password, boolean verify) {
         visit();
@@ -65,10 +61,6 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleLeaveText();
         }
-        waitForElement(clickProfileBtn).click();
-        verifyEmailAndRoleAfterLogin("EMS: Employee","adena.leannon@yahoo.com");
-        verifyDetailsByClickingProfileBtn("MG","Email: adena.leannon@yahoo.com","Melodee Gulgowski","Role: Employee");
-        actions.sendKeys(Keys.ESCAPE).perform();
     }
     public void executeLoginEmployeeAfterUpdatingLeaveStatus(String username, String password, boolean verify) {
         waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -124,7 +116,7 @@ public class LoginPage extends BasePage {
         String actualEmail = elementForEmail.getText();
         Assert.assertEquals(actualEmail,expectedEmail);
     }
-    public void verifyDetailsByClickingProfileBtn(String expectedInitials, String expectedEmail, String expectedName, String expectedRole){
+    public void verifyDetailsThroughProfileBtn(String expectedInitials, String expectedEmail, String expectedName, String expectedRole){
         String xpathForInitials = "(//div[contains(@class,'MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault')])[2]";
         WebElement elementForInitials = driver.findElement(By.xpath(xpathForInitials));
         String actualInitials = elementForInitials.getText();
@@ -147,9 +139,20 @@ public class LoginPage extends BasePage {
         System.out.println(actualRole);
         Assert.assertEquals(actualRole,expectedRole);
     }
+    public void verifyAdminUserDetailsThroughProfileBtn(){
+        waitForElement(clickProfileBtn).click();
+        verifyEmailAndRoleAfterLogin("EMS: Admin","admin@gmail.com");
+        verifyDetailsThroughProfileBtn("PA","Email: admin@gmail.com","PyTheta Admin","Role: Admin");
+        actions.sendKeys(Keys.ESCAPE).perform();
+    }
+    public void verifyEmployeeUserDetailsThroughProfileBtn(){
+        waitForElement(clickProfileBtn).click();
+        verifyEmailAndRoleAfterLogin("EMS: Employee","adena.leannon@yahoo.com");
+        verifyDetailsThroughProfileBtn("MG","Email: adena.leannon@yahoo.com","Melodee Gulgowski","Role: Employee");
+        actions.sendKeys(Keys.ESCAPE).perform();
+    }
     public void clickingToggleBtn(){
         waitForElement(clickToggleBtnToHide).click();
-        System.out.println("hello");
         waitForElementsToBeInvisible(waitForElement(verifySideBar));
         waitForElement(clickToggleBtnToShow).click();
         Assert.assertTrue(waitForElement(verifySideBar).isDisplayed());

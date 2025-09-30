@@ -20,6 +20,7 @@ public class LoginTest extends BaseTest{
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
+        loginPage.verifyAdminUserDetailsThroughProfileBtn();
         loginPage.verifyAdminTabs();
         loginPage.verifySearchResults("De");
     }
@@ -31,6 +32,7 @@ public class LoginTest extends BaseTest{
         loginPage.executeLoginEmployee("adena.leannon@yahoo.com","Pytheta123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/leaveEmp";
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
+        loginPage.verifyEmployeeUserDetailsThroughProfileBtn();
         loginPage.verifyEmployeeTabs();
         loginPage.verifySearchResults("e");
     }
