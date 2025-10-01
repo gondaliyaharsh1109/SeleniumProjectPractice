@@ -70,11 +70,11 @@ public class LeavePage extends BasePage {
     }
     public void createLeaveAsEmployee(String leaveType) {
         String randomReason = faker.chuckNorris().fact();
-        LocalDate today = LocalDate.now();
-        LocalDate futureDate = today.plusDays(7);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-        String fromDate = today.format(formatter);
-        String toDate = futureDate.format(formatter);
+//        LocalDate today = LocalDate.now();
+//        LocalDate futureDate = today.plusDays(7);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+//        String fromDate = today.format(formatter);
+//        String toDate = futureDate.format(formatter);
 
         waitForElement(newBtn).click();
         Assert.assertEquals(waitForElement(verifyCreateLeaveText).getText(), "Create Leave Status");
@@ -82,7 +82,7 @@ public class LeavePage extends BasePage {
         selectFromDropdown(leaveTypeSelection, dropDownSelection, leaveType);
 
         waitForElement(clickOnFromDateBtn).click();
-        waitForElement(clickBtnForNextMonth).click();
+//        waitForElement(clickBtnForNextMonth).click();
         waitForElement(selectFromDate).click();
         waitForElement(clickOnToDateBtn).click();
         waitForElement(clickBtnForNextMonth).click();
@@ -142,7 +142,7 @@ public class LeavePage extends BasePage {
         updateLeaveStatusAsAdmin(statusTypeSelectInAdmin, updateLeaveStatusInAdmin);
         logout();
 
-        loginPage.executeLoginEmployeeAfterUpdatingLeaveStatus("adena.leannon@yahoo.com", "Pytheta123!", true);
+        loginPage.executeLoginEmployeeAfterUpdatingPerformingActionsAsAdmin("adena.leannon@yahoo.com", "Pytheta123!", true);
         verifyUpdatedStatusAsEmployee(updateLeaveStatusInAdmin);
     }
 }
