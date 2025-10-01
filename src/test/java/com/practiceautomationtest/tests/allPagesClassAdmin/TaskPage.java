@@ -17,14 +17,14 @@ public class TaskPage extends BasePage{
     Actions actions = new Actions(driver);
     Faker faker = new Faker();
     LoginPage loginPage = new LoginPage(driver);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     By clickTasksTab = By.xpath("//span[contains(text(),'Tasks')]");
     By newButton = By.xpath("//button[contains(text(),'New')]");
     By visibleCreateTaskText = By.xpath("//p[contains(text(),'Create Task')]");
     By taskNameInputField = By.id("taskName");
     By assigneeSelectBtn = By.xpath("(//button[@type='button'])[7]");
     By assigneeEmailField = By.xpath("(//div[@data-field='firstName'])[3]");
-    By taskDateSelectionBtn = By.xpath("(//button[@type='button'])[8]");
-    By selectTodayDate = By.xpath("//button[@role='gridcell']");
+    By enterTodayDate = By.xpath("//input[@placeholder='mm-dd-yyyy']");
     By taskDescInputField = By.id("taskDescription");
     By saveBtn = By.xpath("//button[contains(text(),'Save')]");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
@@ -33,10 +33,8 @@ public class TaskPage extends BasePage{
     By clickBtnForLogout = By.xpath("(//button)[1]");
     By clickOnLogoutBtn = By.xpath("//p[contains(text(),'Logout')]");
     By verifyLoginText = By.xpath("//h5[contains(text(),'LOGIN')]");
-    By clickOnTaskTab = By.xpath("//span[contains(text(),'Tasks')]");
     By verifyFirstTaskAsEmployee = By.xpath("(//div[@data-field='taskName'])[2]");
     By clickOnStatusDropdown = By.xpath("//div[@operator='eq']");
-    By allListOfStatusDropdown = By.xpath("//li[@role='option']");
 
     public TaskPage(WebDriver driver){
         super(driver);
@@ -55,10 +53,9 @@ public class TaskPage extends BasePage{
         waitForElementToBeInvisible(loaderToBeInvisible);
         actions.doubleClick(waitForElement(assigneeEmailField)).perform();
     }
-    public void selectTaskDate() {
-        waitForElement(taskDateSelectionBtn).click();
-        waitForElement(selectTodayDate).sendKeys(basePage.getTodayDate());
-        waitForElement(selectTodayDate).click();
+    public void enterTaskDate() {
+        String todayDate = LocalDate.now().format(formatter);
+        waitForElement(enterTodayDate).sendKeys(todayDate);
     }
     public void enterTaskDescription(String taskDescription) {
         waitForElement(taskDescInputField).sendKeys(taskDescription);
@@ -87,7 +84,7 @@ public class TaskPage extends BasePage{
         navigateToTaskPage();
         enterTaskName(taskName);
         selectAssignee();
-        selectTaskDate();
+        enterTaskDate();
         enterTaskDescription(taskDescription);
         saveTask();
 //        verifyTaskCreated(taskName);
@@ -107,7 +104,7 @@ public class TaskPage extends BasePage{
         navigateToTaskPage();
         enterTaskName(taskName);
         selectAssignee();
-        selectTaskDate();
+        enterTaskDate();
         enterTaskDescription(taskDescription);
         saveTask();
         executeLogout();

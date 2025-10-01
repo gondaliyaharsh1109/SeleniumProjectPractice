@@ -16,16 +16,14 @@ import java.util.List;
 public class LeavePage extends BasePage {
     Faker faker = new Faker();
     Actions actions = new Actions(driver);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
     By newBtn = By.xpath("//button[contains(text(),'New')]");
     By verifyCreateLeaveText = By.xpath("//p[contains(text(),'Create Leave Status')]");
     By leaveTypeSelection = By.xpath("//div[@id='id__leaveType']");
     By dropDownSelection = By.xpath("//li[@role='option']");
-    By clickOnFromDateBtn = By.xpath("(//button)[7]");
-    By selectFromDate = By.xpath("//button[contains(text(),'3')]");
-    By clickOnToDateBtn = By.xpath("(//button)[8]");
-    By clickBtnForNextMonth = By.xpath("//button[@title='Next month']");
-    By selectToDate = By.xpath("//button[contains(text(),'10')]");
+    By enterFromDate = By.xpath("(//input[@placeholder='mm-dd-yyyy'])[1]");
+    By enterToDate = By.xpath("(//input[@placeholder='mm-dd-yyyy'])[2]");
     By reasonInputField = By.id("reason");
     By clickSaveButton = By.xpath("//button[contains(text(),'Save')]");
     By verifyLeaveCreatedToastMessage = By.xpath("//p[contains(text(),'Leave sent successfully.')]");
@@ -47,14 +45,14 @@ public class LeavePage extends BasePage {
         String actualCreateLeaveStatusText = waitForElement(verifyCreateLeaveText).getText();
         Assert.assertEquals(actualCreateLeaveStatusText, "Create Leave Status");
     }
-    public void selectLeaveType(String leaveTypeSelect) {
-        waitForElement(leaveTypeSelection).click();
-        waitForElement(dropDownSelection); // ensures dropdown is visible
+    public void selectFromDropdown(By dropdownBtn, By dropdownOptions, String optionText) {
+        waitForElement(dropdownBtn).click();
+        waitForElement(dropdownOptions);
 
-        List<WebElement> leaveTypeDropDown = driver.findElements(dropDownSelection);
-        for (WebElement leaveType : leaveTypeDropDown) {
-            if (leaveType.getText().equals(leaveTypeSelect)) {
-                leaveType.click();
+        List<WebElement> options = driver.findElements(dropdownOptions);
+        for (WebElement option : options) {
+            if (option.getText().equals(optionText)) {
+                option.click();
                 break;
             }
         }
@@ -63,32 +61,15 @@ public class LeavePage extends BasePage {
         String randomReason = faker.chuckNorris().fact();
         waitForElement(reasonInputField).sendKeys(randomReason);
     }
-    public void addLeave(String leaveTypeSelect) {
-        openLeaveForm();
-        selectLeaveType(leaveTypeSelect);
-        enterLeaveReason();
-    }
     public void createLeaveAsEmployee(String leaveType) {
-        String randomReason = faker.chuckNorris().fact();
-//        LocalDate today = LocalDate.now();
-//        LocalDate futureDate = today.plusDays(7);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-//        String fromDate = today.format(formatter);
-//        String toDate = futureDate.format(formatter);
+        String fromDate = LocalDate.now().plusDays(2).format(formatter);
+        String toDate = LocalDate.now().plusDays(10).format(formatter);
 
-        waitForElement(newBtn).click();
-        Assert.assertEquals(waitForElement(verifyCreateLeaveText).getText(), "Create Leave Status");
-
+        openLeaveForm();
         selectFromDropdown(leaveTypeSelection, dropDownSelection, leaveType);
-
-        waitForElement(clickOnFromDateBtn).click();
-//        waitForElement(clickBtnForNextMonth).click();
-        waitForElement(selectFromDate).click();
-        waitForElement(clickOnToDateBtn).click();
-        waitForElement(clickBtnForNextMonth).click();
-        waitForElement(selectToDate).click();
-
-        waitForElement(reasonInputField).sendKeys(randomReason);
+        waitForElement(enterFromDate).sendKeys(fromDate);
+        waitForElement(enterToDate).sendKeys(toDate);
+        enterLeaveReason();
         waitForElement(clickSaveButton).click();
 
         Assert.assertEquals(waitForElement(verifyLeaveCreatedToastMessage).getText(), "Leave sent successfully.");
@@ -117,18 +98,6 @@ public class LeavePage extends BasePage {
     public void verifyUpdatedStatusAsEmployee(String expectedStatus) {
         String actualUpdatedStatus = waitForElement(verifyLeaveStatusAsEmployee).getText();
         Assert.assertEquals(actualUpdatedStatus, expectedStatus);
-    }
-    public void selectFromDropdown(By dropdownBtn, By dropdownOptions, String optionText) {
-        waitForElement(dropdownBtn).click();
-        waitForElement(dropdownOptions);
-
-        List<WebElement> options = driver.findElements(dropdownOptions);
-        for (WebElement option : options) {
-            if (option.getText().equals(optionText)) {
-                option.click();
-                break;
-            }
-        }
     }
     public void updateLeaveStatusAndVerifyAsEmployee(String leaveTypeSelectInEmployee, String statusTypeSelectInAdmin, String updateLeaveStatusInAdmin) {
 
