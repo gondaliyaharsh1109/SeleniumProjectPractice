@@ -1,8 +1,9 @@
-package com.practiceautomationtest.tests.allPagesClassAdmin;
+package com.practiceautomationtest.tests.allPagesClassEmployee;
 
 import com.github.javafaker.Faker;
+import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
+import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class TaskPage extends BasePage{
+public class TaskPageEmployee extends BasePage{
     BasePage basePage = new BasePage(driver);
     Actions actions = new Actions(driver);
     Faker faker = new Faker();
@@ -32,8 +33,10 @@ public class TaskPage extends BasePage{
     By verifyAddedTask = By.xpath("(//div[@data-field='taskName'])[2]");
     By clickBtnForLogout = By.xpath("(//button)[1]");
     By clickOnLogoutBtn = By.xpath("//p[contains(text(),'Logout')]");
-
-    public TaskPage(WebDriver driver){
+    By verifyLoginText = By.xpath("//h5[contains(text(),'LOGIN')]");
+    By verifyFirstTaskAsEmployee = By.xpath("(//div[@data-field='taskName'])[2]");
+    By clickOnStatusDropdown = By.xpath("//div[@operator='eq']");
+    public TaskPageEmployee(WebDriver driver){
         super(driver);
     }
     public void navigateToTaskPage() {
@@ -62,14 +65,20 @@ public class TaskPage extends BasePage{
         String actualTaskCreatedMessage = basePage.verifyToastMessage();
         Assert.assertEquals(actualTaskCreatedMessage, "Task created successfully.");
     }
-    public void verifyTaskCreated(String taskName) {
-        waitForElement(searchTaskName).sendKeys(taskName);
-        waitForElement(searchTaskName).sendKeys(Keys.ENTER);
+    public void executeLogout() {
+        waitForElement(clickBtnForLogout).click();
+        waitForElement(clickOnLogoutBtn).click();
         waitForElementToBeInvisible(loaderToBeInvisible);
-        String actualTaskAddedName = waitForElement(verifyAddedTask).getText();
-        Assert.assertEquals(actualTaskAddedName, taskName);
     }
-    public void addNewTask(){
+    public void taskStatusDropdown(String expectedStatus){
+        List<WebElement> statusList = driver.findElements(By.xpath("//li[@role='option']"));
+        for(WebElement listOfStatus : statusList){
+            if(listOfStatus.getText().equals(expectedStatus)){
+                listOfStatus.click();
+            }
+        }
+    }
+    public void addNewTaskAndVerifyInEmployee(){
         String taskName = "Task: " + faker.company().buzzword();
         String taskDescription = faker.lorem().sentence(10);
 
@@ -79,6 +88,14 @@ public class TaskPage extends BasePage{
         enterTaskDate();
         enterTaskDescription(taskDescription);
         saveTask();
-//        verifyTaskCreated(taskName);
+        executeLogout();
+        Assert.assertEquals(waitForElement(verifyLoginText).getText(),"LOGIN");
+        loginPage.executeLoginEmployeeAfterUpdatingPerformingActionsAsAdmin("adena.leannon@yahoo.com","Pytheta123!",true);
+        waitForElement(clickTasksTab).click();
+        waitForElement(clickOnStatusDropdown).click();
+        taskStatusDropdown("Todo");
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        String expectedTaskName = waitForElement(verifyFirstTaskAsEmployee).getText();
+        Assert.assertEquals(taskName,expectedTaskName);
     }
 }
