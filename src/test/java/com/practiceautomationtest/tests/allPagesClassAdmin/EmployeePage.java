@@ -10,6 +10,7 @@ import java.util.List;
 public class EmployeePage extends BasePage {
     Actions actions = new Actions(driver);
     Faker faker = new Faker();
+    TaskPage taskPage = new TaskPage(driver);
     By clickEmployeeTab = By.xpath("//span[contains(text(),'Employees')]");
     By newBtn = By.xpath("//button[contains(text(),'New')]");
     By visibleCreateEmployeeText = By.xpath("//p[contains(text(),'Create Employee')]");
@@ -308,5 +309,8 @@ public class EmployeePage extends BasePage {
         updateMobileNumber(mobileNumberInEdit);
         saveUpdatedEmployee();
         verifyUpdatedEmployee(expectedFullNameInEdit);
+    }
+    public void addNewTaskAndVerifyInEmployee(){
+        taskPage.addNewTaskAndVerifyInEmployee();
     }
 }

@@ -62,7 +62,7 @@ public class LoginPage extends BasePage {
             visibleLeaveText();
         }
     }
-    public void executeLoginEmployeeAfterUpdatingLeaveStatus(String username, String password, boolean verify) {
+    public void executeLoginEmployeeAfterUpdatingPerformingActionsAsAdmin(String username, String password, boolean verify) {
         waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
         waitForElement(enterEmail).sendKeys(Keys.DELETE);
         waitForElement(enterEmail).sendKeys(username);

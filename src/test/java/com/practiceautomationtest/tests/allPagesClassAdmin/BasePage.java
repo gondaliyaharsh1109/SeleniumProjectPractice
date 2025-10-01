@@ -6,11 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class BasePage {
     public WebDriver driver;
     public WebDriverWait wait;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -37,5 +40,11 @@ public class BasePage {
     public String verifyToastMessage(){
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 css-1cp532n']")));
         return errorMessage.getText();
+    }
+    public String getTodayDate(){
+        return LocalDate.now().format(formatter);
+    }
+    public String getFutureDate(int daysToAdd){
+        return LocalDate.now().plusDays(daysToAdd).format(formatter);
     }
 }
