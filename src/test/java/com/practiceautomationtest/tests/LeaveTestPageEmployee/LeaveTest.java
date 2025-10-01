@@ -15,7 +15,7 @@ public class LeaveTest extends BaseTest {
         String expectedUrl = "https://employee-cicd.vercel.app/leaveEmp";
         Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
         LeavePage leavePage = new LeavePage(driver);
-        leavePage.addLeave("Sick");
+        leavePage.createLeaveAsEmployee("Sick");
     }
     @Test
     public void verifyLeaveStatusAsEmployee(){
