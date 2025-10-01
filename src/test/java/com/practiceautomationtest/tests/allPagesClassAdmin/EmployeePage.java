@@ -1,5 +1,6 @@
 package com.practiceautomationtest.tests.allPagesClassAdmin;
 import com.github.javafaker.Faker;
+import com.practiceautomationtest.tests.allPagesClassEmployee.TaskPageEmployee;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,7 +11,7 @@ import java.util.List;
 public class EmployeePage extends BasePage {
     Actions actions = new Actions(driver);
     Faker faker = new Faker();
-    TaskPage taskPage = new TaskPage(driver);
+    TaskPageEmployee taskPageEmployee = new TaskPageEmployee(driver);
     By clickEmployeeTab = By.xpath("//span[contains(text(),'Employees')]");
     By newBtn = By.xpath("//button[contains(text(),'New')]");
     By visibleCreateEmployeeText = By.xpath("//p[contains(text(),'Create Employee')]");
@@ -311,6 +312,6 @@ public class EmployeePage extends BasePage {
         verifyUpdatedEmployee(expectedFullNameInEdit);
     }
     public void addNewTaskAndVerifyInEmployee(){
-        taskPage.addNewTaskAndVerifyInEmployee();
+        taskPageEmployee.addNewTaskAndVerifyInEmployee();
     }
 }

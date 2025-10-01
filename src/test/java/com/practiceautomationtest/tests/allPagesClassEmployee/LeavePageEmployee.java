@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class LeavePage extends BasePage {
+public class LeavePageEmployee extends BasePage {
     Faker faker = new Faker();
     Actions actions = new Actions(driver);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -37,7 +37,7 @@ public class LeavePage extends BasePage {
     By leaveStatusUpdatedToastMessage = By.xpath("//p[contains(text(),'Leave status updated successfully')]");
     By verifyLeaveStatusAsEmployee = By.xpath("(//div[(@data-field='leave_status')])[2]");
 
-    public LeavePage(WebDriver driver){
+    public LeavePageEmployee(WebDriver driver){
         super(driver);
     }
     public void openLeaveForm() {
