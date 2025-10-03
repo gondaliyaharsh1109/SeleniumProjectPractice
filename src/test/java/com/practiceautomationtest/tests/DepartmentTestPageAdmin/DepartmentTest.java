@@ -1,6 +1,5 @@
 package com.practiceautomationtest.tests.DepartmentTestPageAdmin;
 import com.practiceautomationtest.tests.allPagesClassAdmin.DepartmentPage;
-import com.practiceautomationtest.tests.allPagesClassAdmin.EmployeePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.testng.Assert;
@@ -27,12 +26,21 @@ public class DepartmentTest extends BaseTest {
         departmentPage.verifyDeleteDepartmentValidationWithPosition();
     }
     @Test
-    public void searchDepartmentUsingFilterBtn(){
+    public void searchingDepartmentUsingDepartmentNameAndLocationFilter(){
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
-        departmentPage.searchingDepartmentUsingFilter("Finance Department","Vadodara");
+        departmentPage.searchingDepartmentUsingDepartmentNameAndLocationFilter("Finance Department","Vadodara");
+    }
+    @Test
+    public void searchingDepartmentUsingLocationFilterOnly(){
+        LoginPage loginPage = new LoginPage(driver);
+        DepartmentPage departmentPage = new DepartmentPage(driver);
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
+        departmentPage.searchingDepartmentUsingLocationFilterOnly("Finance Department", "Vadodara","location");
     }
 }

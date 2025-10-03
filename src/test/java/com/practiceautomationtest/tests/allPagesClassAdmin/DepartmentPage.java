@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
+import java.util.List;
+
 public class DepartmentPage extends BasePage {
     BasePage basePage = new BasePage(driver);
     Faker faker = new Faker();
@@ -35,6 +37,7 @@ public class DepartmentPage extends BasePage {
     By enterValueForFilter = By.id("value_0");
     By clickOKBtn = By.xpath("//button[contains(text(),'OK')]");
     By verifyFirstLocation = By.xpath("(//div[@data-field='location'])[2]");
+    By clickColumnDropDown = By.id("id__column_0");
 
     public DepartmentPage(WebDriver driver){
         super(driver);
@@ -114,7 +117,7 @@ public class DepartmentPage extends BasePage {
         deleteDepartmentAndVerifyConfirm();
         verifyDepartmentAttachedValidation();
     }
-    public void searchingDepartmentUsingFilter(String departmentName, String location){
+    public void searchingDepartmentUsingDepartmentNameAndLocationFilter(String departmentName, String location){
         waitForElement(clickFilterBtn).click();
         waitForElement(clickClearBtn).click();
         waitForElement(clickAddBtn).click();
@@ -125,5 +128,24 @@ public class DepartmentPage extends BasePage {
         Assert.assertEquals(departmentName, expectedDepartmentName);
         String expectedLocationName = waitForElement(verifyFirstLocation).getText();
         Assert.assertEquals(location,expectedLocationName);
+    }
+    public void searchingDepartmentUsingLocationFilterOnly(String departmentName, String location, String selectOptionFromDropdown){
+        waitForElement(clickFilterBtn).click();
+        waitForElement(clickClearBtn).click();
+        waitForElement(clickAddBtn).click();
+        waitForElement(clickColumnDropDown).click();
+        List<WebElement> categoryForFiltering = driver.findElements(By.xpath("//li[@role='option']"));
+        for(WebElement category : categoryForFiltering){
+            if(category.getText().equals(selectOptionFromDropdown)){
+                category.click();
+            }
+        }
+        waitForElement(enterValueForFilter).sendKeys(location);
+        waitForElement(clickOKBtn).click();
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        String expectedLocationName = waitForElement(verifyFirstLocation).getText();
+        Assert.assertEquals(location,expectedLocationName);
+        String expectedDepartmentName = waitForElement(firstDepartmentNameInList).getText();
+        Assert.assertEquals(departmentName, expectedDepartmentName);
     }
 }
