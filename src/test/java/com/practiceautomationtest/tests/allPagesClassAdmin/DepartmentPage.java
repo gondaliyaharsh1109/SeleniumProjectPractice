@@ -22,7 +22,6 @@ public class DepartmentPage extends BasePage {
     By firstDepartmentNameInList = By.xpath("(//div[@data-field='departmentName'])[2]");
     By searchDepartment = By.xpath("//input[@placeholder='Search with DepartmentName']");
     By verifyEditDepartmentText = By.xpath("//p[contains(text(),'Edit Department')]");
-    By editDepartmentNameField = By.xpath("//input[@id='departmentName']");
     By clickPositionTab = By.xpath("//span[contains(text(),'Position')]");
     By verifyDepartmentNameFromPositionPage = By.xpath("(//div[@data-field='departmentName'])[2]");
     By clickDepartmentsTab = By.xpath("//span[contains(text(),'Departments')]");
@@ -30,7 +29,6 @@ public class DepartmentPage extends BasePage {
     By deleteDepartmentBtn = By.xpath("(//button[contains(text(),'Delete')])[1]");
     By verifyConfirmDeleteMessage = By.xpath("//h2[contains(text(),'Confirm')]");
     By confirmDeleteBtn = By.xpath("(//button[contains(text(),'Delete')])[3]");
-    By departmentAttachedWithPosition = By.xpath("//p[contains(text(),'This department has positions attached. Please remove positions first.')]");
     By clickFilterBtn = By.xpath("(//button[@type='button'])[6]");
     By clickClearBtn = By.xpath("//button[contains(text(),'Clear')]");
     By clickAddBtn = By.xpath("//button[contains(text(),'Add')]");
@@ -70,16 +68,6 @@ public class DepartmentPage extends BasePage {
         waitForElement(searchDepartment).sendKeys(Keys.ENTER);
         String actualDepartmentName = waitForElement(firstDepartmentNameInList).getText();
         Assert.assertEquals(actualDepartmentName,departmentName);
-    }
-    public void editDepartment(String oldName, String newName){
-        WebElement searchDptName = waitForElement(searchDepartment);
-        searchDptName.sendKeys(oldName);
-        searchDptName.sendKeys(Keys.ENTER);
-        WebElement searchDepartment = waitForElement(firstDepartmentNameInList);
-        actions.doubleClick(searchDepartment).perform();
-        waitForElement(editDepartmentNameField).clear();
-        waitForElement(editDepartmentNameField).sendKeys(newName);
-        clickSaveButton();
     }
     public String getDepartmentNameFromPositionTab(){
         waitForElement(clickPositionTab).click();
