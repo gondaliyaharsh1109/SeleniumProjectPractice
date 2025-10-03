@@ -29,13 +29,12 @@ public class TaskPageEmployee extends BasePage{
     By taskDescInputField = By.id("taskDescription");
     By saveBtn = By.xpath("//button[contains(text(),'Save')]");
     By loaderToBeInvisible = By.xpath("//span[contains(@role,'progressbar')]");
-    By searchTaskName = By.id("search");
-    By verifyAddedTask = By.xpath("(//div[@data-field='taskName'])[2]");
     By clickBtnForLogout = By.xpath("(//button)[1]");
     By clickOnLogoutBtn = By.xpath("//p[contains(text(),'Logout')]");
     By verifyLoginText = By.xpath("//h5[contains(text(),'LOGIN')]");
     By verifyFirstTaskAsEmployee = By.xpath("(//div[@data-field='taskName'])[2]");
     By clickOnStatusDropdown = By.xpath("//div[@operator='eq']");
+
     public TaskPageEmployee(WebDriver driver){
         super(driver);
     }
