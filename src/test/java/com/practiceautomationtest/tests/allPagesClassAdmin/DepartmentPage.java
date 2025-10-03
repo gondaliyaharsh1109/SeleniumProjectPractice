@@ -29,6 +29,12 @@ public class DepartmentPage extends BasePage {
     By verifyConfirmDeleteMessage = By.xpath("//h2[contains(text(),'Confirm')]");
     By confirmDeleteBtn = By.xpath("(//button[contains(text(),'Delete')])[3]");
     By departmentAttachedWithPosition = By.xpath("//p[contains(text(),'This department has positions attached. Please remove positions first.')]");
+    By clickFilterBtn = By.xpath("(//button[@type='button'])[6]");
+    By clickClearBtn = By.xpath("//button[contains(text(),'Clear')]");
+    By clickAddBtn = By.xpath("//button[contains(text(),'Add')]");
+    By enterValueForFilter = By.id("value_0");
+    By clickOKBtn = By.xpath("//button[contains(text(),'OK')]");
+    By verifyFirstLocation = By.xpath("(//div[@data-field='location'])[2]");
 
     public DepartmentPage(WebDriver driver){
         super(driver);
@@ -98,7 +104,7 @@ public class DepartmentPage extends BasePage {
         waitForElement(confirmDeleteBtn).click();
     }
     public void verifyDepartmentAttachedValidation() {
-        String actualDepartmentValidateMessage = waitForElement(departmentAttachedWithPosition).getText();
+        String actualDepartmentValidateMessage = basePage.verifyToastMessage();
         String expectedDepartmentValidateMessage = "This department has positions attached. Please remove positions first.";
         Assert.assertEquals(actualDepartmentValidateMessage,expectedDepartmentValidateMessage);
     }
@@ -107,5 +113,17 @@ public class DepartmentPage extends BasePage {
         goToDepartmentDetails(departmentName);
         deleteDepartmentAndVerifyConfirm();
         verifyDepartmentAttachedValidation();
+    }
+    public void searchingDepartmentUsingFilter(String departmentName, String location){
+        waitForElement(clickFilterBtn).click();
+        waitForElement(clickClearBtn).click();
+        waitForElement(clickAddBtn).click();
+        waitForElement(enterValueForFilter).sendKeys(departmentName);
+        waitForElement(clickOKBtn).click();
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        String expectedDepartmentName = waitForElement(firstDepartmentNameInList).getText();
+        Assert.assertEquals(departmentName, expectedDepartmentName);
+        String expectedLocationName = waitForElement(verifyFirstLocation).getText();
+        Assert.assertEquals(location,expectedLocationName);
     }
 }
