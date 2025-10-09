@@ -20,7 +20,7 @@ public class DepartmentPage extends BasePage {
     By clickSaveButton = By.xpath("//button[contains(text(),'Save')]");
     By visibleCreateDepartmentText = By.xpath("//li[@class='MuiBreadcrumbs-li']");
     By firstDepartmentNameInList = By.xpath("(//div[@data-field='departmentName'])[2]");
-    By searchDepartment = By.xpath("//input[@placeholder='Search with DepartmentName']");
+    By searchDepartment = By.id("search");
     By verifyEditDepartmentText = By.xpath("//p[contains(text(),'Edit Department')]");
     By clickPositionTab = By.xpath("//span[contains(text(),'Position')]");
     By verifyDepartmentNameFromPositionPage = By.xpath("(//div[@data-field='departmentName'])[2]");
@@ -36,6 +36,8 @@ public class DepartmentPage extends BasePage {
     By clickOKBtn = By.xpath("//button[contains(text(),'OK')]");
     By verifyFirstLocation = By.xpath("(//div[@data-field='location'])[2]");
     By clickColumnDropDown = By.id("id__column_0");
+    By clickDeActivateBtn = By.xpath("(//button[contains(text(),'De-Activate')])[1]");
+    By verifyStatus = By.xpath("(//div[@data-field='inactive'])[2]");
 
     public DepartmentPage(WebDriver driver){
         super(driver);
@@ -135,5 +137,23 @@ public class DepartmentPage extends BasePage {
         Assert.assertEquals(location,expectedLocationName);
         String expectedDepartmentName = waitForElement(firstDepartmentNameInList).getText();
         Assert.assertEquals(departmentName, expectedDepartmentName);
+    }
+    public void updateStatusOfDepartmentFromActiveToInactiveAndVerifyBySearch(String departmentName){
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        waitForElement(searchDepartment).sendKeys(departmentName);
+        actions.sendKeys(Keys.ENTER).perform();
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        actions.doubleClick(waitForElement(firstDepartmentNameInList)).perform();
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        waitForElement(clickDeActivateBtn).click();
+        String actualStatusUpdateMessage = basePage.verifyToastMessage();
+        String expectedStatusUpdateMessage = "Department status updated successfully.";
+        Assert.assertEquals(actualStatusUpdateMessage,expectedStatusUpdateMessage);
+        waitForElementToBeInvisible(loaderToBeInvisible);
+        waitForElement(searchDepartment).sendKeys(departmentName);
+        actions.sendKeys(Keys.ENTER).perform();
+        String actualStatusAfterUpdate = waitForElement(verifyStatus).getText();
+        String expectedStatusAfterUpdate = "Inactive";
+        Assert.assertEquals(actualStatusAfterUpdate,expectedStatusAfterUpdate);
     }
 }
