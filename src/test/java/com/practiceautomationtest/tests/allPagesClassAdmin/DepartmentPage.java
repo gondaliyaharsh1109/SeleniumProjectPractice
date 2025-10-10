@@ -38,6 +38,11 @@ public class DepartmentPage extends BasePage {
     By clickColumnDropDown = By.id("id__column_0");
     By clickDeActivateBtn = By.xpath("(//button[contains(text(),'De-Activate')])[1]");
     By verifyStatus = By.xpath("(//div[@data-field='inactive'])[2]");
+    By verifyPositionText = By.xpath("//div[contains(@class,'MuiBox-root css-yz')]//span");
+    By clickEmployeeTab = By.xpath("//span[contains(text(),'Employees')]");
+    By verifyEmployeeText = By.xpath("//div[contains(@class,'MuiBox-root css-yz')]//span");
+    By clickOnHomeBtn = By.xpath("//div[contains(@class,'MuiBox-root css-f')]");
+    By verifyDepartmentText = By.xpath("//div[contains(@class,'MuiBox-root css-yz')]//span");
 
     public DepartmentPage(WebDriver driver){
         super(driver);
@@ -159,5 +164,17 @@ public class DepartmentPage extends BasePage {
     public void redirectToDepartmentByClickingHomeBtn(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+        waitForElement(clickPositionTab).click();
+        String actualPositionText = waitForElement(verifyPositionText).getText();
+        String expectedPositionText = "Position";
+        Assert.assertEquals(actualPositionText,expectedPositionText);
+        waitForElement(clickEmployeeTab).click();
+        String actualEmployeeText = waitForElement(verifyEmployeeText).getText();
+        String expectedEmployeeText = "Employees";
+        Assert.assertEquals(actualEmployeeText,expectedEmployeeText);
+        waitForElement(clickOnHomeBtn).click();
+        String actualDepartmentText = waitForElement(verifyDepartmentText).getText();
+        String expectedDepartmentText = "Departments";
+        Assert.assertEquals(actualDepartmentText,expectedDepartmentText);
     }
 }

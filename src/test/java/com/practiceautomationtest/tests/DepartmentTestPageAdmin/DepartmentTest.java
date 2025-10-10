@@ -44,4 +44,9 @@ public class DepartmentTest extends BaseTest {
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         departmentPage.updateStatusOfDepartmentFromActiveToInactiveAndVerifyBySearch("Biotechnology");
     }
+    @Test
+    public void redirectToDepartmentByClickingHomeBtn(){
+        DepartmentPage departmentPage = new DepartmentPage(driver);
+        departmentPage.redirectToDepartmentByClickingHomeBtn();
+    }
 }
