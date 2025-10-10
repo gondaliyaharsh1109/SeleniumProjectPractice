@@ -3,7 +3,7 @@
 <suite name="Full Regression Suite" verbose="1">
     <test name="Positive login test">
         <classes>
-            <class name="com.practiceautomationtest.tests.LoginTestPage.LoginTest">
+            <class name="com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest">
                 <methods>
                     <include name="positiveTestLogin"/>
                 </methods>
@@ -12,7 +12,7 @@
     </test>
     <test name="Incorrect User Name">
         <classes>
-            <class name="com.practiceautomationtest.tests.LoginTestPage.LoginTest">
+            <class name="com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest">
                 <methods>
                     <include name="incorrectUserNameTest"/>
                 </methods>
@@ -21,7 +21,7 @@
     </test>
     <test name="Incorrect Password Test">
         <classes>
-            <class name="com.practiceautomationtest.tests.LoginTestPage.LoginTest">
+            <class name="com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest">
                 <methods>
                     <include name="incorrectPasswordTest"/>
                 </methods>
@@ -30,7 +30,7 @@
     </test>
     <test name="Add Department Test">
         <classes>
-            <class name="com.practiceautomationtest.tests.DepartmentTestPage.DepartmentTest">
+            <class name="com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest">
                 <methods>
                     <include name="addDepartment"/>
                 </methods>
