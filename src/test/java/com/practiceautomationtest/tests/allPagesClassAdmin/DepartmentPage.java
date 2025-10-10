@@ -156,4 +156,8 @@ public class DepartmentPage extends BasePage {
         String expectedStatusAfterUpdate = "Inactive";
         Assert.assertEquals(actualStatusAfterUpdate,expectedStatusAfterUpdate);
     }
+    public void redirectToDepartmentByClickingHomeBtn(){
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+    }
 }
