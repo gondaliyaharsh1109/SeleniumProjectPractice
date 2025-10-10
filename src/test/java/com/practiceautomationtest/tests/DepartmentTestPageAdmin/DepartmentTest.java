@@ -17,13 +17,13 @@ public class DepartmentTest extends BaseTest {
         departmentPage.executeAddDepartment();
     }
     @Test
-    public void deleteDepartmentValidationWithPosition(){
+    public void notAbleToDeleteDepartmentWithPosition(){
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
-        departmentPage.verifyDeleteDepartmentValidationWithPosition();
+        departmentPage.notAbleToDeleteDepartmentWithPosition();
     }
     @Test
     public void searchingDepartmentUsingDepartmentNameAndLocationFilter(){

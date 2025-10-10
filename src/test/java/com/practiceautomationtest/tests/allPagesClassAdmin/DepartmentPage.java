@@ -101,7 +101,7 @@ public class DepartmentPage extends BasePage {
         String expectedDepartmentValidateMessage = "This department has positions attached. Please remove positions first.";
         Assert.assertEquals(actualDepartmentValidateMessage,expectedDepartmentValidateMessage);
     }
-    public void verifyDeleteDepartmentValidationWithPosition(){
+    public void notAbleToDeleteDepartmentWithPosition(){
         String departmentName = getDepartmentNameFromPositionTab();
         goToDepartmentDetails(departmentName);
         deleteDepartmentAndVerifyConfirm();
