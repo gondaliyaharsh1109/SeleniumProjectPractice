@@ -37,4 +37,40 @@
             </class>
         </classes>
     </test>
+    <test name="Can not Delete Department With Position">
+        <classes>
+            <class name="com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest">
+                <methods>
+                    <include name="notAbleToDeleteDepartmentWithPosition"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Searching department using name and location filter">
+        <classes>
+            <class name="com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest">
+                <methods>
+                    <include name="searchingDepartmentUsingDepartmentNameAndLocationFilter"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Searching department using location filter only">
+        <classes>
+            <class name="com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest">
+                <methods>
+                    <include name="searchingDepartmentUsingLocationFilterOnly"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Update status from active to inactive and verify by search">
+        <classes>
+            <class name="com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest">
+                <methods>
+                    <include name="updateStatusOfDepartmentFromActiveToInactiveAndVerifyBySearch"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>
