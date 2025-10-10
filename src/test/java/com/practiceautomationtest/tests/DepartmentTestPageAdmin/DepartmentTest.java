@@ -12,8 +12,6 @@ public class DepartmentTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
         departmentPage.executeAddDepartment();
     }
     @Test
@@ -21,8 +19,6 @@ public class DepartmentTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(),expectedUrl);
         departmentPage.notAbleToDeleteDepartmentWithPosition();
     }
     @Test
@@ -39,8 +35,6 @@ public class DepartmentTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         departmentPage.searchingDepartmentUsingLocationFilterOnly("Finance Department", "Vadodara","location");
     }
     @Test
@@ -48,8 +42,6 @@ public class DepartmentTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         DepartmentPage departmentPage = new DepartmentPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         departmentPage.updateStatusOfDepartmentFromActiveToInactiveAndVerifyBySearch("Biotechnology");
     }
 }

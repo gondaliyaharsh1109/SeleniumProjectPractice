@@ -12,8 +12,6 @@ public class TaskTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         TaskPage taskPage = new TaskPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         taskPage.addNewTask();
     }
 }

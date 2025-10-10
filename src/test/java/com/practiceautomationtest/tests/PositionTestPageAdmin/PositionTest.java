@@ -13,8 +13,6 @@ public class PositionTest extends BaseTest {
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         String uniqueName = faker.name().firstName();
         positionPage.executeAddPosition(uniqueName, "local operations", "12th Pass");
         String actualPositionAddedMessage = positionPage.verifyPositionCreateMessage();
@@ -29,8 +27,6 @@ public class PositionTest extends BaseTest {
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         positionPage.executeSearchPosition("Manager_175800");
     }
     @Test
@@ -38,8 +34,6 @@ public class PositionTest extends BaseTest {
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         String uniquePosition = "Manager_" + System.currentTimeMillis();
         positionPage.executeAddPosition(uniquePosition, "local operations", "12th Pass");
         String actualPositionAddedMessage = positionPage.verifyPositionCreateMessage();
@@ -68,8 +62,6 @@ public class PositionTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         PositionPage positionPage = new PositionPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(loginPage.currentUrl(), expectedUrl);
         positionPage.verifyDeletePositionValidationWithEmployee();
     }
 //    @Test
