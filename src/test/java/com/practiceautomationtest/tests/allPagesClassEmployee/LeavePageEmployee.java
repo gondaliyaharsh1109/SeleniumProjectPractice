@@ -100,7 +100,7 @@ public class LeavePageEmployee extends BasePage {
         Assert.assertEquals(actualUpdatedStatus, expectedStatus);
     }
     public void updateLeaveStatusAndVerifyAsEmployee(String leaveTypeSelectInEmployee, String statusTypeSelectInAdmin, String updateLeaveStatusInAdmin) {
-
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
 
         createLeaveAsEmployee(leaveTypeSelectInEmployee);
@@ -108,6 +108,8 @@ public class LeavePageEmployee extends BasePage {
         Assert.assertEquals(waitForElement(verifyLoginText).getText(), "LOGIN");
 
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         updateLeaveStatusAsAdmin(statusTypeSelectInAdmin, updateLeaveStatusInAdmin);
         logout();
 

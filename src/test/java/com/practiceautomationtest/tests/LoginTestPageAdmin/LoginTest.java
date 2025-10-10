@@ -1,5 +1,6 @@
 package com.practiceautomationtest.tests.LoginTestPageAdmin;
 
+import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import org.testng.Assert;
@@ -9,25 +10,31 @@ public class LoginTest extends BaseTest{
 
     @Test
     public void positiveTestLoginAsAdmin(){
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.verifyAdminUserDetailsThroughProfileBtn();
         loginPage.verifyAdminTabs();
         loginPage.verifySearchResults("De");
     }
     @Test
     public void positiveTestLoginAsEmployee(){
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginEmployee("adena.leannon@yahoo.com","Pytheta123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.verifyEmployeeUserDetailsThroughProfileBtn();
         loginPage.verifyEmployeeTabs();
         loginPage.verifySearchResults("e");
     }
 
     @Test
-    public void incorrectUserNameTest(){
+    public void executeLoginAdminForIncorrectUsername(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginAdmin("admin@yahoo.com","Admin123!",false);
@@ -46,9 +53,12 @@ public class LoginTest extends BaseTest{
 
     @Test
     public void clickingToggleBtnForSideBar(){
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.clickingToggleBtn();
     }
 }
