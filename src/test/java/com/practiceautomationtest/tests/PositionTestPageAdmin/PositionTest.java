@@ -1,5 +1,6 @@
 package com.practiceautomationtest.tests.PositionTestPageAdmin;
 import com.github.javafaker.Faker;
+import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.PositionPage;
 import com.practiceautomationtest.tests.BaseTest;
@@ -10,9 +11,12 @@ public class PositionTest extends BaseTest {
     Faker faker = new Faker();
     @Test
     public void addPosition(){
+        BasePage basePage = new BasePage(driver);
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         String uniqueName = faker.name().firstName();
         positionPage.executeAddPosition(uniqueName, "local operations", "12th Pass");
         String actualPositionAddedMessage = positionPage.verifyPositionCreateMessage();
@@ -24,16 +28,22 @@ public class PositionTest extends BaseTest {
     }
     @Test
     public void searchAndCountPositions() {
+        BasePage basePage = new BasePage(driver);
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         positionPage.executeSearchPosition("Manager_175800");
     }
     @Test
     public void editAndDeletePosition(){
+        BasePage basePage = new BasePage(driver);
         PositionPage positionPage = new PositionPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         String uniquePosition = "Manager_" + System.currentTimeMillis();
         positionPage.executeAddPosition(uniquePosition, "local operations", "12th Pass");
         String actualPositionAddedMessage = positionPage.verifyPositionCreateMessage();
@@ -59,9 +69,12 @@ public class PositionTest extends BaseTest {
     }
     @Test
     public void deletePositionValidationWithEmployee(){
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         PositionPage positionPage = new PositionPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com", "Admin123!", true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         positionPage.verifyDeletePositionValidationWithEmployee();
     }
 //    @Test

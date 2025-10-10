@@ -162,8 +162,11 @@ public class DepartmentPage extends BasePage {
         Assert.assertEquals(actualStatusAfterUpdate,expectedStatusAfterUpdate);
     }
     public void redirectToDepartmentByClickingHomeBtn(){
+        BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
+        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         waitForElement(clickPositionTab).click();
         String actualPositionText = waitForElement(verifyPositionText).getText();
         String expectedPositionText = "Position";

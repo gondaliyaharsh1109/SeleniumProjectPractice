@@ -45,7 +45,6 @@ public class LoginPage extends BasePage {
         Assert.assertEquals(actualLeaveText,expectedLeaveText);
     }
     public void executeLoginAdmin(String username, String password, boolean verify) {
-        BasePage basePage = new BasePage(driver);
         visit();
         waitForElement(enterEmail).sendKeys(username);
         waitForElement(enterPassword).sendKeys(password);
@@ -53,8 +52,6 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleDepartmentText();
         }
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
     }
     public void executeLoginEmployee(String username, String password, boolean verify) {
         BasePage basePage = new BasePage(driver);
@@ -65,8 +62,6 @@ public class LoginPage extends BasePage {
         if (verify){
             visibleLeaveText();
         }
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
-        Assert.assertEquals(basePage.currentUrl(),expectedUrl);
     }
     public void executeLoginEmployeeAfterUpdatingPerformingActionsAsAdmin(String username, String password, boolean verify) {
         waitForElement(enterEmail).sendKeys(Keys.chord(Keys.CONTROL, "a"));
