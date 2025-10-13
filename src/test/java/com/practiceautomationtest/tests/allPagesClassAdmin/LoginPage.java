@@ -131,13 +131,11 @@ public class LoginPage extends BasePage {
         String xpathForExpectedEmail = "(//span[contains(@class,'MuiTypography-root MuiTypography-caption')])[2]";
         WebElement elementForEmail = driver.findElement(By.xpath(xpathForExpectedEmail));
         String actualEmail = elementForEmail.getText();
-        System.out.println(actualEmail);
         Assert.assertEquals(actualEmail,expectedEmail);
 
         String xpathForExpectedRole = "(//span[contains(@class,'MuiTypography-root MuiTypography-caption')])[3]";
         WebElement elementForRole = driver.findElement(By.xpath(xpathForExpectedRole));
         String actualRole = elementForRole.getText();
-        System.out.println(actualRole);
         Assert.assertEquals(actualRole,expectedRole);
     }
     public void verifyAdminUserDetailsThroughProfileBtn(){

@@ -26,7 +26,7 @@ public class LoginTest extends BaseTest{
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginEmployee("adena.leannon@yahoo.com","Pytheta123!",true);
-        String expectedUrl = "https://employee-cicd.vercel.app/department";
+        String expectedUrl = "https://employee-cicd.vercel.app/leaveEmp";
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.verifyEmployeeUserDetailsThroughProfileBtn();
         loginPage.verifyEmployeeTabs();
@@ -34,7 +34,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void executeLoginAdminForIncorrectUsername(){
+    public void incorrectUsernameTestAsAdmin(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginAdmin("admin@yahoo.com","Admin123!",false);
@@ -43,7 +43,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void incorrectPasswordTest(){
+    public void incorrectPasswordTestAsAdmin(){
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123@",false);
