@@ -8,11 +8,25 @@ import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest{
 
+//    @Test
+//    public void sampleTest() {
+//        test = extent.createTest("Sample Login Test");
+//        driver.get("https://example.com");
+//
+//        // Sample assertion to demonstrate failure
+//        if(!driver.getTitle().contains("Example")) {
+//            throw new AssertionError("Title does not contain 'Example'");
+//        }
+//
+//        test.info("Navigated to Example.com successfully");
+//    }
+
     @Test
     public void positiveTestLoginAsAdmin(){
         BasePage basePage = new BasePage(driver);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
+//        test = extent.createTest("Positive login test");
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
