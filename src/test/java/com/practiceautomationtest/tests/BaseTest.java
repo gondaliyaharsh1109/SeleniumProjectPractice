@@ -40,14 +40,14 @@ public class BaseTest {
         if (result.getStatus() == ITestResult.FAILURE) {
             test.fail(result.getThrowable());
 
-            // Take screenshot
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String path = "target/screenshots/" + result.getName() + ".png";
-            File dest = new File(path);
-            Files.createDirectories(dest.getParentFile().toPath());
-            Files.copy(src.toPath(), dest.toPath());
-
-            test.addScreenCaptureFromPath(path);
+//            // Take screenshot
+//            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//            String path = "target/screenshots/" + result.getName() + ".png";
+//            File destination = new File(path);
+//            Files.createDirectories(destination.getParentFile().toPath());
+//            Files.copy(src.toPath(), destination.toPath());
+//
+//            test.addScreenCaptureFromPath(path);
         } else if (result.getStatus() == ITestResult.SUCCESS) {
             test.pass("Test Passed");
         }

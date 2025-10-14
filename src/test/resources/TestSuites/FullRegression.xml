@@ -23,6 +23,15 @@
             </class>
         </classes>
     </test>
+    <test name="Incorrect Username Test As Admin">
+        <classes>
+            <class name="com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest">
+                <methods>
+                    <include name="incorrectUsernameTestAsAdmin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
     <test name="Incorrect Password Test As Admin">
         <classes>
             <class name="com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest">
