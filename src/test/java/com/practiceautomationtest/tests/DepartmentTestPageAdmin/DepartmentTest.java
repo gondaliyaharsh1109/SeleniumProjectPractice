@@ -3,6 +3,7 @@ import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.DepartmentPage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
+import io.qameta.allure.Allure;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
