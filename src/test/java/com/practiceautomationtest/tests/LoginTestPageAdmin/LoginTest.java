@@ -26,8 +26,8 @@ public class LoginTest extends BaseTest{
     @Test
     @Description("Verify that admin can login successfully")
     public void positiveTestLoginAsAdmin(){
-        test = extent.createTest("Positive login test as admin");
         BasePage basePage = new BasePage(driver);
+        test = extent.createTest("Positive login test as admin");
         Allure.step("Open browser and navigate to login page");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();

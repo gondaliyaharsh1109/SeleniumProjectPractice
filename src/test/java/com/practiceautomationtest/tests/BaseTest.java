@@ -8,10 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +19,7 @@ public class BaseTest {
     public static ExtentReports extent;
     public ExtentTest test;
 
-    @BeforeClass
+    @BeforeSuite
     public void setUpReport() {
         ExtentSparkReporter spark = new ExtentSparkReporter("target/Extent Report/ExtentReport.html");
         extent = new ExtentReports();
@@ -36,27 +33,19 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown(ITestResult result) throws IOException {
+    public void tearDown(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
             test.fail(result.getThrowable());
-
-//            // Take screenshot
-//            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-//            String path = "target/screenshots/" + result.getName() + ".png";
-//            File destination = new File(path);
-//            Files.createDirectories(destination.getParentFile().toPath());
-//            Files.copy(src.toPath(), destination.toPath());
-//
-//            test.addScreenCaptureFromPath(path);
         } else if (result.getStatus() == ITestResult.SUCCESS) {
-            test.pass("Test Passed");
+            test.pass("Test passed");
+        } else if (result.getStatus() == ITestResult.SKIP) {
+            test.skip("Test skipped");
         }
-
         driver.quit();
     }
 
-    @AfterClass
-    public void tearDownReport() {
+    @AfterSuite
+    public void closeReport() {
         extent.flush();
     }
 }
