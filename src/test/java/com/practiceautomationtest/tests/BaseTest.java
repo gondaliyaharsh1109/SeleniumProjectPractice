@@ -3,6 +3,7 @@ package com.practiceautomationtest.tests;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import io.qameta.allure.Step;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -30,12 +31,14 @@ public class BaseTest {
     }
 
     @BeforeMethod(alwaysRun = true)
+    @Step("Browser Setup")
     public void setUp(){
         driver = new ChromeDriver();
         driver.manage().window().maximize();
     }
 
     @AfterMethod(alwaysRun = true)
+    @Step("Tear down browser")
 //    public void tearDown(ITestResult result) throws IOException
     public void tearDown(){
 //        if (result.getStatus() == ITestResult.FAILURE) {
