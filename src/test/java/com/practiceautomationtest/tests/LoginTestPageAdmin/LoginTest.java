@@ -3,6 +3,10 @@ package com.practiceautomationtest.tests.LoginTestPageAdmin;
 import com.practiceautomationtest.tests.allPagesClassAdmin.BasePage;
 import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -24,11 +28,14 @@ public class LoginTest extends BaseTest{
     @Test
     public void positiveTestLoginAsAdmin(){
         BasePage basePage = new BasePage(driver);
+        Allure.step("Open browser and navigate to login page");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
 //        test = extent.createTest("Positive login test");
+        Allure.step("Login with valid admin credentials");
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
+        Allure.step("Verify dashboard is visible");
         Assert.assertEquals(basePage.currentUrl(),expectedUrl);
         loginPage.verifyAdminUserDetailsThroughProfileBtn();
         loginPage.verifyAdminTabs();

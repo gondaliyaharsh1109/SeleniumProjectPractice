@@ -1,5 +1,7 @@
 package com.practiceautomationtest.tests.allPagesClassAdmin;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -28,6 +30,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    @Step("Open login page")
     public void visit() {
         visits("https://employee-cicd.vercel.app/login");
     }
@@ -44,6 +47,7 @@ public class LoginPage extends BasePage {
         String expectedLeaveText = "Leave";
         Assert.assertEquals(actualLeaveText,expectedLeaveText);
     }
+    @Step("Login with username: {0} and password: {1}")
     public void executeLoginAdmin(String username, String password, boolean verify) {
         visit();
         waitForElement(enterEmail).sendKeys(username);

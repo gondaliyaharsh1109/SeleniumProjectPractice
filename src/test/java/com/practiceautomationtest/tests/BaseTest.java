@@ -36,27 +36,28 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown(ITestResult result) throws IOException {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            test.fail(result.getThrowable());
-
-            // Take screenshot
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String path = "target/screenshots/" + result.getName() + ".png";
-            File dest = new File(path);
-            Files.createDirectories(dest.getParentFile().toPath());
-            Files.copy(src.toPath(), dest.toPath());
-
-            test.addScreenCaptureFromPath(path);
-        } else if (result.getStatus() == ITestResult.SUCCESS) {
-            test.pass("Test Passed");
-        }
+//    public void tearDown(ITestResult result) throws IOException
+    public void tearDown(){
+//        if (result.getStatus() == ITestResult.FAILURE) {
+//            test.fail(result.getThrowable());
+//
+//            // Take screenshot
+//            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//            String path = "target/screenshots/" + result.getName() + ".png";
+//            File dest = new File(path);
+//            Files.createDirectories(dest.getParentFile().toPath());
+//            Files.copy(src.toPath(), dest.toPath());
+//
+//            test.addScreenCaptureFromPath(path);
+//        } else if (result.getStatus() == ITestResult.SUCCESS) {
+//            test.pass("Test Passed");
+//        }
 
         driver.quit();
     }
 
-    @AfterClass
-    public void tearDownReport() {
-        extent.flush();
-    }
+//    @AfterClass
+//    public void tearDownReport() {
+//        extent.flush();
+//    }
 }
