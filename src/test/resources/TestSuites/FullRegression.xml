@@ -2,6 +2,7 @@
 
 <suite name="Full Regression Suite" verbose="1">
     <listeners>
+        <listener class-name="com.practiceautomationtest.listeners.CustomTestNGReport"/>
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
     <!--Login Test Suites -->

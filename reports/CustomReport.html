@@ -1,0 +1,90 @@
+<html><head><title>Custom TestNG Report</title>
+<style>
+body {font-family: Arial, sans-serif; background-color: #f4f4f4;}
+h1 {color: #333;}
+.summary {margin-bottom: 20px;}
+.summary span {margin-right: 20px; font-weight: bold;}
+table {border-collapse: collapse; width: 100%;}
+th, td {border: 1px solid #ddd; padding: 8px; text-align: left;}
+th {background-color: #4CAF50; color: white;}
+.PASS {background-color: #d4edda;}
+.FAIL {background-color: #f8d7da;}
+.SKIPPED {background-color: #fff3cd;}
+</style></head><body>
+<h1>Custom TestNG Report</h1>
+<div class='summary'>
+<span>Total: 11</span>
+<span>Passed: 8</span>
+<span>Failed: 3</span>
+<span>Skipped: 0</span>
+</div>
+<table>
+<tr><th>Test Name</th><th>Class</th><th>Status</th><th>Time</th></tr>
+<tr class='PASS'>
+<td>positiveTestLoginAsAdmin</td>
+<td>com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest</td>
+<td>PASS</td>
+<td>5.979s</td>
+</tr>
+<tr class='PASS'>
+<td>positiveTestLoginAsEmployee</td>
+<td>com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest</td>
+<td>PASS</td>
+<td>4.409s</td>
+</tr>
+<tr class='PASS'>
+<td>incorrectUsernameTestAsAdmin</td>
+<td>com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest</td>
+<td>PASS</td>
+<td>1.936s</td>
+</tr>
+<tr class='PASS'>
+<td>incorrectPasswordTestAsAdmin</td>
+<td>com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest</td>
+<td>PASS</td>
+<td>3.424s</td>
+</tr>
+<tr class='PASS'>
+<td>clickingToggleBtnForSideBar</td>
+<td>com.practiceautomationtest.tests.LoginTestPageAdmin.LoginTest</td>
+<td>PASS</td>
+<td>4.693s</td>
+</tr>
+<tr class='FAIL'>
+<td>searchingDepartmentUsingDepartmentNameAndLocationFilter</td>
+<td>com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest</td>
+<td>FAIL</td>
+<td>4.758s</td>
+</tr>
+<tr class='FAIL'>
+<td>searchingDepartmentUsingLocationFilterOnly</td>
+<td>com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest</td>
+<td>FAIL</td>
+<td>6.296s</td>
+</tr>
+<tr class='PASS'>
+<td>addDepartment</td>
+<td>com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest</td>
+<td>PASS</td>
+<td>6.523s</td>
+</tr>
+<tr class='PASS'>
+<td>notAbleToDeleteDepartmentWithPosition</td>
+<td>com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest</td>
+<td>PASS</td>
+<td>9.403s</td>
+</tr>
+<tr class='FAIL'>
+<td>updateStatusOfDepartmentFromActiveToInactiveAndVerifyBySearch</td>
+<td>com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest</td>
+<td>FAIL</td>
+<td>8.727s</td>
+</tr>
+<tr class='PASS'>
+<td>redirectToDepartmentByClickingHomeBtn</td>
+<td>com.practiceautomationtest.tests.DepartmentTestPageAdmin.DepartmentTest</td>
+<td>PASS</td>
+<td>3.932s</td>
+</tr>
+</table>
+</body></html>

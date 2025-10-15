@@ -5,6 +5,8 @@ import com.practiceautomationtest.tests.allPagesClassAdmin.LoginPage;
 import com.practiceautomationtest.tests.BaseTest;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -25,6 +27,7 @@ public class LoginTest extends BaseTest{
 
     @Test
     @Description("Verify that admin can login successfully")
+    @Severity(SeverityLevel.CRITICAL)
     public void positiveTestLoginAsAdmin(){
         BasePage basePage = new BasePage(driver);
         test = extent.createTest("Positive login test as admin");
