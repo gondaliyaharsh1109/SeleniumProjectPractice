@@ -7,23 +7,12 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import java.util.logging.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest{
-
-//    @Test
-//    public void sampleTest() {
-//        test = extent.createTest("Sample Login Test");
-//        driver.get("https://example.com");
-//
-//        // Sample assertion to demonstrate failure
-//        if(!driver.getTitle().contains("Example")) {
-//            throw new AssertionError("Title does not contain 'Example'");
-//        }
-//
-//        test.info("Navigated to Example.com successfully");
-//    }
+    Logger logger = Logger.getLogger(LoginTest.class.getName());
 
     @Test
     @Description("Verify that admin can login successfully")
@@ -32,10 +21,11 @@ public class LoginTest extends BaseTest{
         BasePage basePage = new BasePage(driver);
         test = extent.createTest("Positive login test as admin");
         Allure.step("Open browser and navigate to login page");
+        logger.info("Opened browser and navigate to login page");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.visit();
-//        test = extent.createTest("Positive login test");
         Allure.step("Login with valid admin credentials");
+        logger.info("Logged in with valid admin credentials");
         loginPage.executeLoginAdmin("admin@gmail.com","Admin123!",true);
         String expectedUrl = "https://employee-cicd.vercel.app/department";
         Allure.step("Verify department page is visible");

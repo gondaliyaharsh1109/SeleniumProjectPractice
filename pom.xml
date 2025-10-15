@@ -84,16 +84,16 @@
             <version>5.1.1</version>
         </dependency>
 
-        <!-- Log4j2 API + core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.20.0</version> <!-- pick latest stable -->
+            <version>2.21.0</version>
         </dependency>
+        <!-- Log4j Core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.20.0</version>
+            <version>2.21.0</version>
         </dependency>
     </dependencies>
 
